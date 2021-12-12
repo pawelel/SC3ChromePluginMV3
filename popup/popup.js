@@ -1,6 +1,12 @@
 ﻿/*jshint esversion: 6 */
-let device;
-let currentTab;
+var device;
+var situationId;
+var area;
+var place;
+var coordinate;
+var model;
+var asset;
+var table = document.querySelector('#assetTable');
 chrome.runtime.sendMessage({ name: 'fetchAssets' }, (assetList) => {
   function generateTableHead(table, data) {
     let thead = table.createTHead();
@@ -23,14 +29,8 @@ chrome.runtime.sendMessage({ name: 'fetchAssets' }, (assetList) => {
       }
     }
   }
-var situationId;
-var area;
-var place;
-var coordinate;
-var model;
-var asset;
-  let table = document.querySelector('#assetTable');
-let title = document.querySelector('#output-title');
+
+var title = document.querySelector('#output-title');
   let data = Object.keys(assetList[0]);
   generateTableHead(table, data);
   generateTable(table, assetList);
@@ -60,6 +60,7 @@ let title = document.querySelector('#output-title');
       }
     }
   }
+});
   $('.selectme').on('click', function () {
     $(this).addClass('selected').siblings().removeClass('selected');
     device = $(this).find('td:nth-child(4)').text();
@@ -113,7 +114,7 @@ document.getElementById('fillForm').addEventListener('click', () => {
     files: ['injector.js']
     });
 }});
-});
+
 });
 
 // chrome.runtime.sendMessage({ name: 'fetchTable' }, (response) => {

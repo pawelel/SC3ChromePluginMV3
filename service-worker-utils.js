@@ -1,3 +1,4 @@
+/*jshint esversion: 8 */
 // This file can be imported inside the service worker,
 // which means all of its functions and variables will be accessible
 // inside the service worker.
@@ -14,7 +15,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
                 return Promise.reject(response);
             }
         })
-            .then(data => sendResponse(data))
+            .then(data => sendResponse(data));
             // .catch(error => alert("Something went wrong!!" + error));
         return true;
     }
@@ -26,9 +27,9 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
                 return Promise.reject(response);
             }
         })
-            .then(data => sendResponse(data))
+            .then(data => sendResponse(data));
             // .catch(error => alert("Something went wrong!!" + error));
         return true;
     }
 });
-console.log("External file is also loaded!")
+console.log("External file is also loaded!");

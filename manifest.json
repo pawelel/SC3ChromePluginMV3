@@ -13,7 +13,8 @@
         "*://*/*"
     ],
     "background": {
-        "service_worker": "service-worker.js"
+        "service_worker": "service-worker.js",
+        "js": "jquery-3.6.0.min.js"
     },
     "content_scripts": [{
         "js": ["foreground.js", "jquery-3.6.0.min.js", "popup/popup.js"],
