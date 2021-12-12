@@ -1,0 +1,27 @@
+{
+    "manifest_version": 3,
+    "name": "mv3 SC3 Chrome Plugin",
+    "description": "SC3 Helper chrome extension using manifest v3",
+    "version": "0.0.1",
+    "options_page": "settings/settings.html",
+    "action": {
+        "default_title": "SC3 Chrome Plugin",
+        "default_popup": "popup/popup.html"
+    },
+    "permissions": ["scripting", "activeTab", "tabs"],
+    "host_permissions": [
+        "*://*/*"
+    ],
+    "background": {
+        "service_worker": "service-worker.js"
+    },
+    "content_scripts": [{
+        "js": ["foreground.js", "jquery-3.6.0.min.js", "popup/popup.js"],
+        "matches": [
+            "*://sc3-pl.vwgroup.com/*",
+            "*://sc3-pl.vw.vwg/*",
+            "*://sc3.vwgroup.com/*",
+            "*://sc3.vw.vwg/*"
+        ]
+    }]
+}

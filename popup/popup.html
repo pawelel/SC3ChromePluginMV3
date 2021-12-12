@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="popup.css">
+    <title>Chrome Addon v3: popup</title>
+</head>
+<body>
+    This is the <span class="special-text">HTML</span> body of the addon.
+    <div class="container">
+        <input type="text" id="searchField" placeholder="Search Asset" />
+        <label for="situation">Situation</label>
+        <select name="situation" id="situation-select">
+          <option value="">Select Situation</option>
+        </select>
+        <div id="title">
+          <form>
+            <label for="output-title">Output Title</label>
+            <input
+              size="100"
+              name="output-title"
+              id="output-title"
+              disabled="disabled"
+            />
+          </form>
+        </div>
+        <div id="table-wrap">
+          <table id="assetTable">
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+          <div id="fill">
+            <button class="button" id="fillForm">Fill Form</button>
+          </div>
+          <textarea
+            id="description"
+            rows="10"
+            cols="100"
+            disabled="disabled"
+          ></textarea>
+        </div>
+      </div>
+      <script src="popup.js"></script>
+      <script src="../jquery-3.6.0.min.js"></script>
+</body>
+</html>
