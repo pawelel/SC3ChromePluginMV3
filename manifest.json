@@ -11,24 +11,16 @@
   "background": {
     "service_worker": "wrapper.js"
   },
-  "content_scripts": [
+  "web_accessible_resources": [
     {
-      "matches": [
-        "http://sc3-pl.vwgroup.com/*",
-        "https://sc3-pl.vwgroup.com/*",
-        "*://sc3.vwgroup.com/*",
-        "*://sc3.vw.vwg/*"
-      ],
-      "js": ["popup.js", "jquery-3.6.0.min.js"]
+      "resources": ["injector.js"],
+      "matches": ["<all_urls>"]
     }
   ],
-  "web_accessible_resources": [{
-    "resources": ["injector.js"],
-    "matches": ["<all_urls>"]
-  }],
   "permissions": [
     "tabs",
-    "scripting"
+    "scripting",
+    "storage"
   ],
   "host_permissions": [
     "*://sc3-pl.vwgroup.com/*",
