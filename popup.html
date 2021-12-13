@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <style>
+      .selected {
+        background-color: #2d3031 !important;
+        color: white;
+      }
+      .container {
+        width: 600px;
+        height: 100%;
+        display: block;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: stretch;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      #title {
+        display: inline-block;
+      }
+      #table-wrap {
+        display: flex;
+        width: 100%;
+        height: 100%;
+      }
+      #fill {
+        display: inline-block;
+      }
+      .button {
+        background-color: #2d3031;
+        border: none;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        cursor: pointer;
+      }
+      textarea {
+        resize: none;
+      }
+    </style>
+
+    <div class="container">
+      <input type="text" id="searchField" placeholder="Search Asset" />
+      <label for="situation">Situation</label>
+      <select name="situation" id="situation-select">
+        <option value="">Select Situation</option>
+      </select>
+      <div id="title">
+        <form>
+          <label for="output-title">Output Title</label>
+          <input
+            size="100"
+            name="output-title"
+            id="output-title"
+            disabled="disabled"
+          />
+        </form>
+      </div>
+      <div id="table-wrap">
+        <table id="assetTable">
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+        <div id="fill">
+          <button class="button" id="fillForm">Fill Form</button>
+        </div>
+        <textarea
+          id="description"
+          rows="10"
+          cols="100"
+          disabled="disabled"
+        ></textarea>
+      </div>
+      <script src="popup.js"></script>
+      <script src="jquery-3.6.0.min.js"></script>
+    </div>
+  </body>
+</html>

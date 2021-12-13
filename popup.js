@@ -1,12 +1,5 @@
 ﻿/*jshint esversion: 6 */
 var device;
-var situationId;
-var area;
-var place;
-var coordinate;
-var model;
-var asset;
-var table = document.querySelector('#assetTable');
 chrome.runtime.sendMessage({ name: 'fetchAssets' }, (assetList) => {
   function generateTableHead(table, data) {
     let thead = table.createTHead();
@@ -22,15 +15,21 @@ chrome.runtime.sendMessage({ name: 'fetchAssets' }, (assetList) => {
     for (let element of data) {
       let row = table.insertRow();
       row.classList.add('selectme');
-      for (var key of element) {
+      for (let key in element) {
         let cell = row.insertCell();
         let text = document.createTextNode(element[key]);
         cell.appendChild(text);
       }
     }
   }
-
-var title = document.querySelector('#output-title');
+var situationId;
+var area;
+var place;
+var coordinate;
+var model;
+var asset;
+  let table = document.querySelector('#assetTable');
+let title = document.querySelector('#output-title');
   let data = Object.keys(assetList[0]);
   generateTableHead(table, data);
   generateTable(table, assetList);
@@ -60,7 +59,6 @@ var title = document.querySelector('#output-title');
       }
     }
   }
-});
   $('.selectme').on('click', function () {
     $(this).addClass('selected').siblings().removeClass('selected');
     device = $(this).find('td:nth-child(4)').text();
@@ -104,17 +102,27 @@ title.value='';
       }
     });
   });
-document.getElementById('fillForm').addEventListener('click', () => {
-  const tab =  chrome.tabs.query({ active: true, currentWindow: true });
-  const outputTitle = document.getElementById('output-title').value;
-    chrome.tabs.sendMessage(tab[0].id, {outputTitle, function(response) {
-      console.log(response.status);
-     chrome.scripting.executeScript({
-    target: { tabId: tab.id },
-    files: ['injector.js']
-    });
-}});
+ 
+//hello
+ 
+  document.querySelector('#searchField').addEventListener('keyup', filterTable);
+});
+ //when i click on my button
+ document.getElementById('fillForm').addEventListener('click', function () {
+  
+  let outputTitle = document.getElementById('output-title').value;
 
+  chrome.tabs.executeScript({
+      //send the value to be used by script
+      code: `var value = "${outputTitle}";`
+      
+  }, function () {
+      //run the script in the file injector.js
+      chrome.tabs.executeScript({
+          file: 'injector.js'
+      });
+  });
+  console.log(outputTitle);
 });
 
 // chrome.runtime.sendMessage({ name: 'fetchTable' }, (response) => {
@@ -127,7 +135,7 @@ document.getElementById('fillForm').addEventListener('click', () => {
 //       '<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>'
 //     tableBody.innerHTML = ''
 //     //add the headers
-//   for(var i = 0; i < 6; i++) {
+//   for(let i = 0; i < 6; i++) {
 //     tableHead.querySelector('tr').innerHTML += `<th>${response[0]}</th>`
 //   }
 // }
@@ -152,7 +160,7 @@ document.getElementById('fillForm').addEventListener('click', () => {
 //    });
 //});
 
-//var fillData = document.getElementById('fillData');
+//let fillData = document.getElementById('fillData');
 
 //fillData.onclick = function (element) {
 //    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -178,7 +186,7 @@ document.getElementById('fillForm').addEventListener('click', () => {
 //   var sel = document.querySelector('.select-text');
 //   users.forEach( function(user){
 
-//     var opt = document.createElement('option');
+//     let opt = document.createElement('option');
 //     opt.value=users.id;
 //     opt.innerHTML += user.name
 //     sel.appendChild(opt);

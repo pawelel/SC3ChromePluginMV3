@@ -1,4 +1,6 @@
-﻿chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+﻿/*jshint esversion: 8 */
+
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     //query api with multiple parameters
     const tableurl = "https://localhost:44356/api/areas/GetAreaPlaceDeviceModels";
     const dropdownurl = "https://localhost:44356/api/situations";

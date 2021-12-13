@@ -1,28 +1,34 @@
-{
-    "manifest_version": 3,
-    "name": "mv3 SC3 Chrome Plugin",
-    "description": "SC3 Helper chrome extension using manifest v3",
-    "version": "0.0.1",
-    "options_page": "settings/settings.html",
-    "action": {
-        "default_title": "SC3 Chrome Plugin",
-        "default_popup": "popup/popup.html"
-    },
-    "permissions": ["scripting", "activeTab", "tabs"],
-    "host_permissions": [
-        "*://*/*"
-    ],
-    "background": {
-        "service_worker": "service-worker.js",
-        "js": "jquery-3.6.0.min.js"
-    },
-    "content_scripts": [{
-        "js": ["foreground.js", "jquery-3.6.0.min.js", "popup/popup.js"],
-        "matches": [
-            "*://sc3-pl.vwgroup.com/*",
-            "*://sc3-pl.vw.vwg/*",
-            "*://sc3.vwgroup.com/*",
-            "*://sc3.vw.vwg/*"
-        ]
-    }]
+﻿{
+  "manifest_version": 3,
+  "name": "mv3 SC3 Helper Plugin",
+  "version": "0.0.1",
+  "description": "SC3 Helper Plugin",
+  "homepage_url": "https://sc3-pl.vwgroup.com/sc3/index.do?lang=en",
+  "action": {
+    "default_title": "Select fields to fill form",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://sc3-pl.vwgroup.com/*",
+        "https://sc3-pl.vwgroup.com/*",
+        "*://sc3.vwgroup.com/*",
+        "*://sc3.vw.vwg/*"
+      ],
+      "js": ["popup.js", "jquery-3.6.0.min.js"]
+    }
+  ],
+  "permissions": [
+    "tabs"
+  ],
+  "host_permissions": [
+    "*://sc3-pl.vwgroup.com/*",
+    "*://sc3-pl.vw.vwg/*",
+    "*://sc3.vwgroup.com/*",
+    "*://sc3.vw.vwg/*"
+  ]
 }
