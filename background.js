@@ -12,11 +12,11 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
                 return Promise.reject(response);
             }
         })
-            .then(data => sendResponse(data))
-            // .catch(error => alert("Something went wrong!!" + error));
+            .then(data => sendResponse(data));
+        // .catch(error => alert("Something went wrong!!" + error));
         return true;
     }
-    if (message.name === "fetchSituations"){
+    if (message.name === "fetchSituations") {
         fetch(dropdownurl, { mode: 'cors' }).then(async function (response) {
             if (response.ok) {
                 return await response.json();
@@ -24,8 +24,13 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
                 return Promise.reject(response);
             }
         })
-            .then(data => sendResponse(data))
-            // .catch(error => alert("Something went wrong!!" + error));
+            .then(data => sendResponse(data));
+        // .catch(error => alert("Something went wrong!!" + error));
         return true;
     }
+    chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+        if (changeInfo.status === "complete") {
+            chrome.tabs.executeScript(tabId, { file: "injector.js" });
+        }
+    });
 });

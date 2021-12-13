@@ -9,7 +9,7 @@
     "default_popup": "popup.html"
   },
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "wrapper.js"
   },
   "content_scripts": [
     {
@@ -22,8 +22,13 @@
       "js": ["popup.js", "jquery-3.6.0.min.js"]
     }
   ],
+  "web_accessible_resources": [{
+    "resources": ["injector.js"],
+    "matches": ["<all_urls>"]
+  }],
   "permissions": [
-    "tabs"
+    "tabs",
+    "scripting"
   ],
   "host_permissions": [
     "*://sc3-pl.vwgroup.com/*",

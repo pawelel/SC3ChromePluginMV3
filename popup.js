@@ -112,14 +112,13 @@ title.value='';
   
   let outputTitle = document.getElementById('output-title').value;
 
-  chrome.tabs.executeScript({
+  chrome.scripting.executeScript({
       //send the value to be used by script
-      code: `var value = "${outputTitle}";`
-      
+           
   }, function () {
       //run the script in the file injector.js
-      chrome.tabs.executeScript({
-          file: 'injector.js'
+      chrome.scripting.executeScript({
+          files: ['injector.js']
       });
   });
   console.log(outputTitle);

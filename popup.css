@@ -1,0 +1,41 @@
+.selected {
+    background-color: #2d3031 !important;
+    color: white;
+  }
+  .container {
+    width: 600px;
+    height: 100%;
+    display: block;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+  }
+  table,
+  th,
+  td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+  #title {
+    display: inline-block;
+  }
+  #table-wrap {
+    display: flex;
+    width: 100%;
+    height: 100%;
+  }
+  #fill {
+    display: inline-block;
+  }
+  .button {
+    background-color: #2d3031;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+  }
+  textarea {
+    resize: none;
+  }
