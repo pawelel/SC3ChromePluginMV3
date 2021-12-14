@@ -1,6 +1,4 @@
-﻿/*jshint esversion: 8 */
-
-const MOCK_ASSET_LIST = `[
+﻿const MOCK_ASSET_LIST = `[
     {
         "area": "Montage",
         "place": "Line1",

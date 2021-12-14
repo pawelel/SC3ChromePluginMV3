@@ -1,6 +1,4 @@
-﻿/*jshint esversion: 6 */
-
-const assetTable = document.querySelector('#assetTable');
+﻿const assetTable = document.querySelector('#assetTable');
 const searchField = document.querySelector('#searchField');
 const fillForm = document.querySelector('#fillForm');
 const outputTitle = document.querySelector('#output-title');
