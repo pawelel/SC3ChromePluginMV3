@@ -19,7 +19,6 @@ function generateTableBody(tableElement, bodyData) {
     let tbody = tableElement.createTBody();
     for (let rowData of bodyData) {
         let row = tbody.insertRow();
-        row.classList.add('selectme');
         for (let key in rowData) {
             let cell = row.insertCell();
             let text = document.createTextNode(rowData[key]);
@@ -91,7 +90,7 @@ chrome.runtime.sendMessage({ name: 'fetchAssets' }, (assetList) => {
 
     const columnMap = (row) => (name) => row.cells[assetKeys.indexOf(name)].innerText;
 
-    const tableRows = assetTable.querySelectorAll('.selectme');
+    const tableRows = assetTable.querySelectorAll('tbody tr');
     tableRows.forEach((row) => row.addEventListener('click', (clickEvent) => rowClickHandler(row, columnMap(row), tableRows)));
     searchField.addEventListener('keyup', (keyEvent) => filterTable(tableRows, searchField.value));
     fillForm.addEventListener('click', (clickEvent) => fillFormClickHandler());
