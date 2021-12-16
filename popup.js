@@ -2,6 +2,7 @@
 const searchField = document.querySelector('#searchField');
 const fillForm = document.querySelector('#fillForm');
 const outputTitle = document.querySelector('#output-title');
+const outputDescription = document.querySelector('#description');
 const situationSelect = document.querySelector('#situation-select');
 
 function generateTableHead(tableElement, headData) {
@@ -52,6 +53,14 @@ function setSituation(columnMap) {
     }
 }
 
+function setDescription(columnMap) {
+    outputDescription.value = '';
+    if (situationName && columnMap('asset')) {
+        outputDescription.value = 'Hello error!';
+    }
+}
+
+
 function rowClickHandler(selectedRow, columnMap, tableRows) {
     tableRows.forEach((row) => row.classList.remove('selected'));
     selectedRow.classList.add('selected');
@@ -72,13 +81,13 @@ async function getCurrentTabId() {
 }
 
 async function fillFormClickHandler() {
-    chrome.storage.sync.set({ outputTitle: outputTitle.value });
+    chrome.storage.sync.set({ outputTitle: outputTitle.value, outputDescription: outputDescription.value });
     chrome.scripting.executeScript(
         {
             target: { tabId: await getCurrentTabId() },
             files: ['injector.js'],
         },
-        function (injectionResults) {}
+        function (injectionResults) { }
     );
 }
 

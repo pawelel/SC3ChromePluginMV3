@@ -49,6 +49,39 @@ const MOCK_SITUATION_LIST = `[
         "name": "Calibration request",
         "deviceId": 1,
         "deviceName": "Printer"
+    },
+    {
+        "situationId": 5,
+        "name": "No communication with robot",
+        "deviceId": 2,
+        "deviceName": "HMI"
+    }
+]`;
+
+const MOCK_DESCRIPTION_LIST = `[
+    {
+        "situationId": 1,
+        "name": "Paper Jam",
+        "deviceId": 1,
+        "deviceName": "Printer"
+    },
+    {
+        "situationId": 2,
+        "name": "BSOD",
+        "deviceId": 5,
+        "deviceName": "PC"
+    },
+    {
+        "situationId": 3,
+        "name": "Channel blocked",
+        "deviceId": 1,
+        "deviceName": "Printer"
+    },
+    {
+        "situationId": 4,
+        "name": "Calibration request",
+        "deviceId": 1,
+        "deviceName": "Printer"
     }
 ]`;
 
@@ -56,13 +89,15 @@ const ASSET_LIST_ENDPOINT = 'https://localhost:44356/api/areas/GetAreaPlaceDevic
 const SITUATION_LIST_ENDPOINT = 'https://localhost:44356/api/situations';
 
 function fetchAPI(sendResponse, url, mockData) {
-    // Send mock data (quick)
-    sendResponse(JSON.parse(mockData));
     // Fetch real data (slow)
     fetch(url, { mode: 'cors' })
-        .then((response) => (response.ok ? response.json() : Promise.reject(response)))
-        .then((data) => sendResponse(data))
-        .catch((_) => _);
+    .then((response) => (response.ok ? response.json() : Promise.reject(response)))
+    .then((data) => sendResponse(data))
+    .catch((_) => _);
+    // Send mock data (if server is offline)
+    // setInterval(() => sendResponse(JSON.parse(mockData)), 1000);
+    sendResponse(JSON.parse(mockData));
+
 }
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
@@ -75,7 +110,10 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         fetchAPI(sendResponse, SITUATION_LIST_ENDPOINT, MOCK_SITUATION_LIST);
         return true;
     }
-
+    if (message.name === 'fetchDescriptions') {
+        fetchAPI(sendResponse, SITUATION_LIST_ENDPOINT, MOCK_DESCRIPTION_LIST);
+        return true;
+    }
     chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
         if (changeInfo.status === 'complete') {
             chrome.tabs.executeScript(tabId, { file: 'injector.js' });
