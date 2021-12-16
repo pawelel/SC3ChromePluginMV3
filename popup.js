@@ -55,8 +55,9 @@ function setSituation(columnMap) {
 
 function setDescription(columnMap) {
     outputDescription.value = '';
+    const situationName = situationSelect?.options[situationSelect?.selectedIndex]?.text;
     if (situationName && columnMap('asset')) {
-        outputDescription.value = 'Hello error!';
+        outputDescription.value = "Hello error!";
     }
 }
 
@@ -70,7 +71,9 @@ function rowClickHandler(selectedRow, columnMap, tableRows) {
         Array.from(situationSelect.children).forEach((child) => child.remove());
         generateOptions(situationList, columnMap('device')).forEach((option) => situationSelect.appendChild(option));
         situationSelect.addEventListener('change', (event) => setSituation(columnMap));
+        situationSelect.addEventListener('change', (event) => setDescription(columnMap));
         setSituation(columnMap);
+        setDescription(columnMap);
     });
 }
 

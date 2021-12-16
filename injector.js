@@ -14,7 +14,7 @@ chrome.storage.sync.get(['outputTitle', 'outputDescription'], ({ outputTitle, ou
             ele.focus();
         });
         trySearch(descriptionSelector, (des) => {
-            des.value = "hello";
+            des.value = outputDescription;
             des.focus();
         });
     });
