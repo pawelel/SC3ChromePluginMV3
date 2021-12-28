@@ -11,6 +11,7 @@
                 "situationId": "1",
                 "name": "Paper Jam",
                 "description": [
+                    "Printer123",
                     "Paper jam in printer",
                     "Please check the paper"
                 ]
@@ -19,6 +20,7 @@
                 "situationId": "2",
                 "name": "Paper Out",
                 "description": [
+                    "Printer123",
                     "Paper out in printer",
                     "Incorrect paper in printer"
                 ]
@@ -27,6 +29,7 @@
                 "situationId": "3",
                 "name": "Channel blocked",
                 "description": [
+                    "Printer123",
                     "Channel blocked in printer",
                     "It is blocked in the middle of the page"
                 ]
@@ -35,6 +38,53 @@
                 "situationId": "7",
                 "name": "Calibration request",
                 "description": [
+                    "Printer123",
+                    "Calibration request in printer",
+                    "Please calibrate the printer"
+                ]
+            }
+        ]
+    },
+    {
+        "area": "Montage",
+        "place": "Line1",
+        "device": "Printer",
+        "model": "Canon1",
+        "coordinate": "Position1",
+        "asset": "Printer456",
+        "situations": [
+            {
+                "situationId": "1",
+                "name": "Paper Jam",
+                "description": [
+                    "Printer456",
+                    "Paper jam in printer",
+                    "Please check the paper"
+                ]
+            },
+            {
+                "situationId": "2",
+                "name": "Paper Out",
+                "description": [
+                    "Printer456",
+                    "Paper out in printer",
+                    "Incorrect paper in printer"
+                ]
+            },
+            {
+                "situationId": "3",
+                "name": "Channel blocked",
+                "description": [
+                    "Printer456",
+                    "Channel blocked in printer",
+                    "It is blocked in the middle of the page"
+                ]
+            },
+            {
+                "situationId": "7",
+                "name": "Calibration request",
+                "description": [
+                    "Printer456",
                     "Calibration request in printer",
                     "Please calibrate the printer"
                 ]
