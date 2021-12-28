@@ -2,6 +2,7 @@
 const searchField = document.querySelector('#searchField');
 const fillForm = document.querySelector('#fillForm');
 const outputTitle = document.querySelector('#output-title');
+var outputLocation ='';
 const outputDescription = document.querySelector('#description');
 const situationSelect = document.querySelector('#situation-select');
 
@@ -18,12 +19,12 @@ function generateTableHead(tableElement, headData) {
 
 function generateTableBody(tableElement, bodyData) {
     let tbody = tableElement.createTBody();
-    for (let rowData of bodyData) {
+    for (var i = 0; i < bodyData.length; i++) {
         let row = tbody.insertRow();
-        for (let key in rowData) {
+        for (var key in bodyData[i]) {
             let cell = row.insertCell();
-            let text = document.createTextNode(rowData[key]);
-            cell.appendChild(text);
+            let text = document.createTextNode(bodyData[i][key]);
+            cell.appendChild(text);   
         }
     }
 }
@@ -50,6 +51,7 @@ function setSituation(columnMap) {
     const situationName = situationSelect?.options[situationSelect?.selectedIndex]?.text;
     if (situationName && columnMap('device')) {
         outputTitle.value = `[${columnMap('area')}] [${columnMap('place')}] [${columnMap('coordinate')}] [${columnMap('model')}] [${columnMap('asset')}] [${situationName}]`;
+        outputLocation = `[${columnMap('area')}] [${columnMap('place')}] [${columnMap('coordinate')}]`;
     }
 }
 
@@ -57,24 +59,32 @@ function setDescription(columnMap) {
     outputDescription.value = '';
     const situationName = situationSelect?.options[situationSelect?.selectedIndex]?.text;
     if (situationName && columnMap('asset')) {
-        outputDescription.value = "Hello error!";
+        console.log(situationName);
     }
 }
-
+function find_in_object(data, query) {
+    return data.filter(function(record) { 
+      for(var i in record) {
+        if(query[i] && query[i].indexOf(record[i]) !== -1) {
+          return false;
+        }
+      }
+      return true;
+    });
+  }
 
 function rowClickHandler(selectedRow, columnMap, tableRows) {
     tableRows.forEach((row) => row.classList.remove('selected'));
     selectedRow.classList.add('selected');
 
     // TODO: This should really be done with the asset fetching one time if the filter isn't sent.
-    chrome.runtime.sendMessage({ name: 'fetchSituations' }, (situationList) => {
+    const situationList = find_in_object(situationData, { deviceName: columnMap('device') });
         Array.from(situationSelect.children).forEach((child) => child.remove());
         generateOptions(situationList, columnMap('device')).forEach((option) => situationSelect.appendChild(option));
         situationSelect.addEventListener('change', (event) => setSituation(columnMap));
         situationSelect.addEventListener('change', (event) => setDescription(columnMap));
         setSituation(columnMap);
         setDescription(columnMap);
-    });
 }
 
 async function getCurrentTabId() {
@@ -84,7 +94,7 @@ async function getCurrentTabId() {
 }
 
 async function fillFormClickHandler() {
-    chrome.storage.sync.set({ outputTitle: outputTitle.value, outputDescription: outputDescription.value });
+    chrome.storage.sync.set({ outputTitle: outputTitle.value, outputDescription: outputDescription.value, outputLocation: outputLocation });
     chrome.scripting.executeScript(
         {
             target: { tabId: await getCurrentTabId() },
@@ -95,10 +105,21 @@ async function fillFormClickHandler() {
 }
 
 chrome.runtime.sendMessage({ name: 'fetchAssets' }, (assetList) => {
-    const assetKeys = Object.keys(assetList[0]);
-
+    const assetData = assetList.map(function (asset) {
+        return {
+            area: asset.area,
+            place: asset.place,
+            coordinate: asset.coordinate,
+            device: asset.device,
+            model: asset.model,
+            asset: asset.asset
+        };
+    });
+    const assetKeys = Object.keys(assetData[0]);
+    
+console.log(assetData);
     generateTableHead(assetTable, assetKeys);
-    generateTableBody(assetTable, assetList);
+    generateTableBody(assetTable, assetData);
 
     const columnMap = (row) => (name) => row.cells[assetKeys.indexOf(name)].innerText;
 
@@ -107,3 +128,4 @@ chrome.runtime.sendMessage({ name: 'fetchAssets' }, (assetList) => {
     searchField.addEventListener('keyup', (keyEvent) => filterTable(tableRows, searchField.value));
     fillForm.addEventListener('click', (clickEvent) => fillFormClickHandler());
 });
+
