@@ -16,15 +16,22 @@
     <div id="title">
       <form>
         <label for="output-title">Output Title</label>
-        <input size="100" name="output-title" id="output-title" disabled="disabled" />
+        <input size="80" name="output-title" id="output-title" disabled="disabled" />
       </form>
-    </div>
-    <div id="table-wrap">
-      <table id="assetTable"></table>
       <div id="fill">
+      <label for="report-date" id="report-label">Report Date</label>
+        <input type="datetime-local" id="report-date" value="" />
+        <label for="outage" id="outage-label">Outage</label>
+        <input type="checkbox" id="outage" />
+        <form id="outage-period"></form>
         <button class="button" id="fillForm">Fill Form</button>
       </div>
-      <textarea id="description" rows="10" cols="100" disabled="disabled"></textarea>
+    </div>
+ 
+    <div id="table-wrap">
+      <table id="assetTable"></table>
+     
+      <textarea id="description" rows="10" cols="100" disabled="disabled" maxlength="3999" ></textarea>
     </div>
   </div>
 </body>

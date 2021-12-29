@@ -25,7 +25,8 @@
     height: 100%;
   }
   #fill {
-    display: inline-block;
+    display: flex;
+    justify-content: space-between;
   }
   .button {
     background-color: #2d3031;
@@ -35,6 +36,7 @@
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
+    margin-left: auto;
   }
   textarea {
     resize: none;
