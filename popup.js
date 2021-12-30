@@ -7,9 +7,11 @@ var outputLocation = '';
 const outputDescription = document.querySelector('#description');
 const situationSelect = document.querySelector('#situation-select');
 const outage = document.querySelector('#outage');
+var outageTime;
 var situationList;
 var assetData;
 var assetSource;
+var generalDescription;
 
 function generateTableHead(tableElement, headData) {
     let thead = tableElement.createTHead();
@@ -53,22 +55,22 @@ function generateOptions(situationList) {
 }
 function setOutage() {
     var form = document.getElementById('outage-period');
-
+    var date = new Date();
     if (outage.checked) {
-        while (form.lastChild) {
-            form.removeChild(form.lastChild);
-        }
         var outageFrom = document.createElement("input");
         outageFrom.id = 'outage-from';
         outageFrom.type = 'time';
+        outageFrom.value = date.toISOString().slice(11, 16);
         form.appendChild(outageFrom);
         var outageTo = document.createElement("input");
         outageTo.id = 'outage-to';
         outageTo.type = 'time';
+        outageTo.value = date.toISOString().slice(11, 16);
         form.appendChild(outageTo);
     } else {
         while (form.lastChild) {
             form.removeChild(form.lastChild);
+            outageTime = null;
         }
     }
 }
@@ -85,12 +87,27 @@ function setOutage() {
         if (situationName && columnMap('asset')) {
             outputTitle.value = `[${columnMap('area')}] [${columnMap('place')}] [${columnMap('coordinate')}] [${columnMap('model')}] [${columnMap('asset')}] [${situationName}]`;
             outputLocation = `[${columnMap('area')}] [${columnMap('place')}] [${columnMap('coordinate')}]`;
-
-            var generalDescription = situationList.find((situation) => situation.name === situationName).description.join('\n');
-            var reportTime = "Report time: " + reportDate.value + '\n';
-            outputDescription.value = reportTime + generalDescription;
+            generalDescription = situationList.find((situation) => situation.name === situationName).description.join('\n');
+            setDescription();
         }
     }
+
+function setDescription(){
+    var reportTime = "Report time: " + reportDate.value + '\n';
+    var outageFrom = document.getElementById('outage-from');
+    var outageTo = document.getElementById('outage-to');
+    if (outage.checked) {
+        outageTime = "Outage time: " + outageFrom.value + ' - ' + outageTo.value + '\n';
+    } else {
+        outageTime = '';
+    }
+    
+    if(reportDate.value !=null){
+    outputDescription.value = reportTime + outageTime + generalDescription;
+    }
+
+    
+}
 
     function rowClickHandler(selectedRow, columnMap, tableRows) {
         tableRows.forEach((row) => row.classList.remove('selected'));
@@ -144,7 +161,8 @@ function setOutage() {
         tableRows.forEach((row) => row.addEventListener('click', (clickEvent) => rowClickHandler(row, columnMap(row), tableRows)));
         searchField.addEventListener('keyup', (keyEvent) => filterTable(tableRows, searchField.value));
         fillForm.addEventListener('click', (clickEvent) => fillFormClickHandler());
-        outage.addEventListener('change', (changeEvent) => setOutage());
-        reportDate.addEventListener('change', (changeEvent) => setDate());
+        outage.addEventListener('change', (event) => setOutage());
+        reportDate.addEventListener('change', (event) => setDate());
+        outputDescription.addEventListener('change', (event) => setDescription());
     });
 
