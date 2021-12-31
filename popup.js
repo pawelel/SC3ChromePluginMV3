@@ -75,24 +75,24 @@ function setOutage() {
     }
 }
 
-    function setDate() {
-        if (reportDate.value === '') {
-            reportDate.value = new Date().toISOString().slice(0, 16);
-        }
+function setDate() {
+    if (reportDate.value === '') {
+        reportDate.value = new Date().toISOString().slice(0, 16);
     }
+}
 
-    function setSituation(columnMap) {
-        outputTitle.value = '';
-        const situationName = situationSelect?.options[situationSelect?.selectedIndex]?.text;
-        if (situationName && columnMap('asset')) {
-            outputTitle.value = `[${columnMap('area')}] [${columnMap('place')}] [${columnMap('coordinate')}] [${columnMap('model')}] [${columnMap('asset')}] [${situationName}]`;
-            outputLocation = `[${columnMap('area')}] [${columnMap('place')}] [${columnMap('coordinate')}]`;
-            generalDescription = situationList.find((situation) => situation.name === situationName).description.join('\n');
-            setDescription();
-        }
+function setSituation(columnMap) {
+    outputTitle.value = '';
+    const situationName = situationSelect?.options[situationSelect?.selectedIndex]?.text;
+    if (situationName && columnMap('asset')) {
+        outputTitle.value = `[${columnMap('area')}] [${columnMap('place')}] [${columnMap('coordinate')}] [${columnMap('model')}] [${columnMap('asset')}] [${situationName}]`;
+        outputLocation = `[${columnMap('area')}] [${columnMap('place')}] [${columnMap('coordinate')}]`;
+        generalDescription = situationList.find((situation) => situation.name === situationName).description.join('\n');
+        setDescription();
     }
+}
 
-function setDescription(){
+function setDescription() {
     var reportTime = "Report time: " + reportDate.value + '\n';
     var outageFrom = document.getElementById('outage-from');
     var outageTo = document.getElementById('outage-to');
@@ -101,68 +101,73 @@ function setDescription(){
     } else {
         outageTime = '';
     }
-    
-    if(reportDate.value !=null){
-    outputDescription.value = reportTime + outageTime + generalDescription;
+
+    if (reportDate.value != null) {
+        outputDescription.value = reportTime + outageTime + generalDescription;
     }
 
-    
+
 }
 
-    function rowClickHandler(selectedRow, columnMap, tableRows) {
-        tableRows.forEach((row) => row.classList.remove('selected'));
-        selectedRow.classList.add('selected');
+let oldListener = null;
+function rowClickHandler(selectedRow, columnMap, tableRows) {
+    tableRows.forEach((row) => row.classList.remove('selected'));
+    selectedRow.classList.add('selected');
 
-        Array.from(situationSelect.children).forEach((child) => child.remove());
-        situationList = assetSource.find((asset) => asset.asset === columnMap('asset')).situations;
-        generateOptions(situationList).forEach((option) => situationSelect.appendChild(option));
-        situationSelect.addEventListener('change', (event) => setSituation(columnMap));
-        setSituation(columnMap);
-
+    if (oldListener) {
+        situationSelect.removeEventListener('change', oldListener);
     }
 
-    async function getCurrentTabId() {
-        const queryOptions = { active: true, currentWindow: true };
-        const [currentTab] = await chrome.tabs.query(queryOptions);
-        return currentTab.id;
-    }
+    Array.from(situationSelect.children).forEach((child) => child.remove());
+    situationList = assetSource.find((asset) => asset.asset === columnMap('asset')).situations;
+    generateOptions(situationList).forEach((option) => situationSelect.appendChild(option));
+    setSituation(columnMap);
+    oldListener = (event) => setSituation(columnMap);
+    situationSelect.addEventListener('change', oldListener);
+}
 
-    async function fillFormClickHandler() {
-        chrome.storage.sync.set({ outputTitle: outputTitle.value, outputDescription: outputDescription.value, outputLocation: outputLocation });
-        chrome.scripting.executeScript(
-            {
-                target: { tabId: await getCurrentTabId() },
-                files: ['injector.js'],
-            },
-            function (injectionResults) { }
-        );
-    }
+async function getCurrentTabId() {
+    const queryOptions = { active: true, currentWindow: true };
+    const [currentTab] = await chrome.tabs.query(queryOptions);
+    return currentTab.id;
+}
 
-    chrome.runtime.sendMessage({ name: 'fetchAssets' }, (assetList) => {
-        assetSource = assetList;
-        assetData = assetList.map(function (asset) {
-            return {
-                area: asset.area,
-                place: asset.place,
-                coordinate: asset.coordinate,
-                device: asset.device,
-                model: asset.model,
-                asset: asset.asset
-            };
-        });
-        const assetKeys = Object.keys(assetData[0]);
+async function fillFormClickHandler() {
+    chrome.storage.sync.set({ outputTitle: outputTitle.value, outputDescription: outputDescription.value, outputLocation: outputLocation });
+    chrome.scripting.executeScript(
+        {
+            target: { tabId: await getCurrentTabId() },
+            files: ['injector.js'],
+        },
+        function (injectionResults) { }
+    );
+}
 
-        generateTableHead(assetTable, assetKeys);
-        generateTableBody(assetTable, assetData);
-
-        const columnMap = (row) => (name) => row.cells[assetKeys.indexOf(name)].innerText;
-
-        const tableRows = assetTable.querySelectorAll('tbody tr');
-        tableRows.forEach((row) => row.addEventListener('click', (clickEvent) => rowClickHandler(row, columnMap(row), tableRows)));
-        searchField.addEventListener('keyup', (keyEvent) => filterTable(tableRows, searchField.value));
-        fillForm.addEventListener('click', (clickEvent) => fillFormClickHandler());
-        outage.addEventListener('change', (event) => setOutage());
-        reportDate.addEventListener('change', (event) => setDate());
-        outputDescription.addEventListener('change', (event) => setDescription());
+chrome.runtime.sendMessage({ name: 'fetchAssets' }, (assetList) => {
+    assetSource = assetList;
+    assetData = assetList.map(function (asset) {
+        return {
+            area: asset.area,
+            place: asset.place,
+            coordinate: asset.coordinate,
+            device: asset.device,
+            model: asset.model,
+            asset: asset.asset
+        };
     });
+    const assetKeys = Object.keys(assetData[0]);
+
+    generateTableHead(assetTable, assetKeys);
+    generateTableBody(assetTable, assetData);
+
+    const columnMap = (row) => (name) => row.cells[assetKeys.indexOf(name)].innerText;
+
+    const tableRows = assetTable.querySelectorAll('tbody tr');
+    tableRows.forEach((row) => row.addEventListener('click', (clickEvent) => rowClickHandler(row, columnMap(row), tableRows)));
+    searchField.addEventListener('keyup', (keyEvent) => filterTable(tableRows, searchField.value));
+    fillForm.addEventListener('click', (clickEvent) => fillFormClickHandler());
+    outage.addEventListener('change', (event) => setOutage());
+    reportDate.addEventListener('change', (event) => setDate());
+    outputDescription.addEventListener('change', (event) => setDescription());
+});
 
