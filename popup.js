@@ -3,45 +3,25 @@ const searchField = document.querySelector('#searchField');
 const fillForm = document.querySelector('#fillForm');
 const outputTitle = document.querySelector('#output-title');
 const reportDate = document.querySelector('#report-date');
-var outputLocation = '';
 const outputDescription = document.querySelector('#description');
 const situationSelect = document.querySelector('#situation-select');
 const outage = document.querySelector('#outage');
-var outageTime;
+const first = document.querySelector('.first');
+const prev = document.querySelector('.prev');
+const next = document.querySelector('.next');
+const last = document.querySelector('.last');
+var outputLocation = '';
+var outageTime = '';
 var situationList;
 var assetData;
 var assetSource;
-var generalDescription;
-
-function generateTableHead(tableElement, headData) {
-    let thead = tableElement.createTHead();
-    let row = thead.insertRow();
-    for (let key of headData) {
-        let th = document.createElement('th');
-        let text = document.createTextNode(key);
-        th.appendChild(text);
-        row.appendChild(th);
-    }
-}
+var generalDescription = '';
+var reportTime = '';
 
 setOutage();
 setDate();
 
-function generateTableBody(tableElement, bodyData) {
-    let tbody = tableElement.createTBody();
-    for (var i = 0; i < bodyData.length; i++) {
-        let row = tbody.insertRow();
-        for (var key in bodyData[i]) {
-            let cell = row.insertCell();
-            let text = document.createTextNode(bodyData[i][key]);
-            cell.appendChild(text);
-        }
-    }
-}
 
-function filterTable(tableRows, filter) {
-    tableRows.forEach((row) => (row.innerText.toUpperCase().includes(filter.toUpperCase()) ? (row.style.display = '') : (row.style.display = 'none')));
-}
 
 function generateOptions(situationList) {
     const options = [];
@@ -67,10 +47,21 @@ function setOutage() {
         outageTo.type = 'time';
         outageTo.value = date.toISOString().slice(11, 16);
         form.appendChild(outageTo);
+        outageFrom.addEventListener('change', (changeEvent) => {
+            outageTime = `Outage: ${changeEvent.target.value} - ${outageTo.value}\n`;
+            outputDescription.value = reportTime + outageTime + generalDescription;
+        });
+        outageTo.addEventListener('change', (changeEvent) => {
+            outageTime = `Outage: ${outageFrom.value} - ${changeEvent.target.value} \n`;
+            outputDescription.value = reportTime + outageTime + generalDescription;
+        });
+        outageTime = "Outage: " + outageFrom.value + ' - ' + outageTo.value + '\n';
+        outputDescription.value = reportTime + outageTime + generalDescription;
     } else {
         while (form.lastChild) {
             form.removeChild(form.lastChild);
-            outageTime = null;
+            outageTime = '';
+            outputDescription.value = reportTime + outageTime + generalDescription;
         }
     }
 }
@@ -78,6 +69,13 @@ function setOutage() {
 function setDate() {
     if (reportDate.value === '') {
         reportDate.value = new Date().toISOString().slice(0, 16);
+        reportTime = "Report time: " + (reportDate.value).replace('T', ' ') + '\n';
+        outputDescription.value = reportTime + outageTime + generalDescription;
+    } else {
+        reportDate.addEventListener('change', (changeEvent) => {
+            reportTime = "Report time: " + (changeEvent.target.value).replace('T', ' ') + '\n';
+            outputDescription.value = reportTime + outageTime + generalDescription;
+        });
     }
 }
 
@@ -88,25 +86,8 @@ function setSituation(columnMap) {
         outputTitle.value = `[${columnMap('area')}] [${columnMap('place')}] [${columnMap('coordinate')}] [${columnMap('model')}] [${columnMap('asset')}] [${situationName}]`;
         outputLocation = `[${columnMap('area')}] [${columnMap('place')}] [${columnMap('coordinate')}]`;
         generalDescription = situationList.find((situation) => situation.name === situationName).description.join('\n');
-        setDescription();
-    }
-}
-
-function setDescription() {
-    var reportTime = "Report time: " + reportDate.value + '\n';
-    var outageFrom = document.getElementById('outage-from');
-    var outageTo = document.getElementById('outage-to');
-    if (outage.checked) {
-        outageTime = "Outage time: " + outageFrom.value + ' - ' + outageTo.value + '\n';
-    } else {
-        outageTime = '';
-    }
-
-    if (reportDate.value != null) {
         outputDescription.value = reportTime + outageTime + generalDescription;
     }
-
-
 }
 
 let oldListener = null;
@@ -142,9 +123,12 @@ async function fillFormClickHandler() {
         function (injectionResults) { }
     );
 }
-
+outage.addEventListener('change', (event) => setOutage());
+reportDate.addEventListener('change', (event) => setDate());
 chrome.runtime.sendMessage({ name: 'fetchAssets' }, (assetList) => {
     assetSource = assetList;
+    
+
     assetData = assetList.map(function (asset) {
         return {
             area: asset.area,
@@ -166,8 +150,81 @@ chrome.runtime.sendMessage({ name: 'fetchAssets' }, (assetList) => {
     tableRows.forEach((row) => row.addEventListener('click', (clickEvent) => rowClickHandler(row, columnMap(row), tableRows)));
     searchField.addEventListener('keyup', (keyEvent) => filterTable(tableRows, searchField.value));
     fillForm.addEventListener('click', (clickEvent) => fillFormClickHandler());
-    outage.addEventListener('change', (event) => setOutage());
-    reportDate.addEventListener('change', (event) => setDate());
-    outputDescription.addEventListener('change', (event) => setDescription());
-});
 
+});
+function generateTableHead(tableElement, headData) {
+    let thead = tableElement.createTHead();
+    let row = thead.insertRow();
+    for (let key of headData) {
+        let th = document.createElement('th');
+        let text = document.createTextNode(key);
+        th.appendChild(text);
+        row.appendChild(th);
+    }
+}
+
+
+function generateTableBody(tableElement, bodyData) {
+    let page = 0;
+    let tbody = tableElement.createTBody();
+    for (let i = 0; i < page +10; i++) {
+        let row = tbody.insertRow();
+        for (var key in bodyData[i]) {
+            let cell = row.insertCell();
+            let text = document.createTextNode(bodyData[i][key]);
+            cell.appendChild(text);
+        }        
+    }
+    next.addEventListener('click', () => {
+        page == bodyData.length - 10 ? (page = 0) : (page += 10);
+        tbody.innerHTML = '';
+        for (let i = page; i < page + 10; i++) {
+            let row = tbody.insertRow();
+            for (var key in bodyData[i]) {
+                let cell = row.insertCell();
+                let text = document.createTextNode(bodyData[i][key]);
+                cell.appendChild(text);
+            }
+        }
+    });
+   prev.addEventListener('click', () => {
+       page == 0 ? (page = bodyData.length - 10) : (page -= 10);
+         tbody.innerHTML = '';
+            for (let i = page; i < page + 10; i++) {
+                let row = tbody.insertRow();
+                for (var key in bodyData[i]) {
+                    let cell = row.insertCell();
+                    let text = document.createTextNode(bodyData[i][key]);
+                    cell.appendChild(text);
+                }
+            }
+    });
+    first.addEventListener('click', () => {
+        page = 0;
+        tbody.innerHTML = '';
+        for (let i = page; i < page + 10; i++) {
+            let row = tbody.insertRow();
+            for (var key in bodyData[i]) {
+                let cell = row.insertCell();
+                let text = document.createTextNode(bodyData[i][key]);
+                cell.appendChild(text);
+            }
+        }
+    });
+    last.addEventListener('click', () => {
+        page = bodyData.length - 10;
+        tbody.innerHTML = '';
+        for (let i = page; i < page + 10; i++) {
+            let row = tbody.insertRow();
+            for (var key in bodyData[i]) {
+                let cell = row.insertCell();
+                let text = document.createTextNode(bodyData[i][key]);
+                cell.appendChild(text);
+            }
+        }
+    });
+}
+
+function filterTable(tableRows, filter) {
+    tableRows.forEach((row) => (row.innerText.toUpperCase().includes(filter.toUpperCase()) ? (row.style.display = '') : (row.style.display = 'none')));
+}

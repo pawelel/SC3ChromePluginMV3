@@ -150,6 +150,396 @@
                 ]
             }
         ]
+    },
+    {
+        "area": "Assembly",
+        "place": "Finish",
+        "device": "HMI",
+        "model": "HMI 123",
+        "coordinate": "Robotic Station 32",
+        "asset": "RS232",
+        "situations": [
+            {
+                "situationId": "8",
+                "name": "No power",
+                "description": [
+                    "No power in HMI",
+                    "Please check the power"
+                ]
+            },
+            {
+                "situationId": "9",
+                "name": "No internet",
+                "description": [
+                    "No internet in HMI",
+                    "Please check the internet"
+                ]
+            }
+        ]
+    },
+    {
+        "area": "Assembly",
+        "place": "Finish",
+        "device": "HMI",
+        "model": "HMI 123",
+        "coordinate": "Robotic Station 32",
+        "asset": "RS232",
+        "situations": [
+            {
+                "situationId": "8",
+                "name": "No power",
+                "description": [
+                    "No power in HMI",
+                    "Please check the power"
+                ]
+            },
+            {
+                "situationId": "9",
+                "name": "No internet",
+                "description": [
+                    "No internet in HMI",
+                    "Please check the internet"
+                ]
+            }
+        ]
+    },
+    {
+        "area": "Assembly",
+        "place": "Finish",
+        "device": "HMI",
+        "model": "HMI 123",
+        "coordinate": "Robotic Station 32",
+        "asset": "RS232",
+        "situations": [
+            {
+                "situationId": "8",
+                "name": "No power",
+                "description": [
+                    "No power in HMI",
+                    "Please check the power"
+                ]
+            },
+            {
+                "situationId": "9",
+                "name": "No internet",
+                "description": [
+                    "No internet in HMI",
+                    "Please check the internet"
+                ]
+            }
+        ]
+    },
+    {
+        "area": "Assembly",
+        "place": "Finish",
+        "device": "HMI",
+        "model": "HMI 123",
+        "coordinate": "Robotic Station 32",
+        "asset": "RS232",
+        "situations": [
+            {
+                "situationId": "8",
+                "name": "No power",
+                "description": [
+                    "No power in HMI",
+                    "Please check the power"
+                ]
+            },
+            {
+                "situationId": "9",
+                "name": "No internet",
+                "description": [
+                    "No internet in HMI",
+                    "Please check the internet"
+                ]
+            }
+        ]
+    },
+    {
+        "area": "Assembly",
+        "place": "Finish",
+        "device": "HMI",
+        "model": "HMI 123",
+        "coordinate": "Robotic Station 32",
+        "asset": "RS232",
+        "situations": [
+            {
+                "situationId": "8",
+                "name": "No power",
+                "description": [
+                    "No power in HMI",
+                    "Please check the power"
+                ]
+            },
+            {
+                "situationId": "9",
+                "name": "No internet",
+                "description": [
+                    "No internet in HMI",
+                    "Please check the internet"
+                ]
+            }
+        ]
+    },
+    {
+        "area": "Assembly",
+        "place": "Finish",
+        "device": "HMI",
+        "model": "HMI 123",
+        "coordinate": "Robotic Station 32",
+        "asset": "RS232",
+        "situations": [
+            {
+                "situationId": "8",
+                "name": "No power",
+                "description": [
+                    "No power in HMI",
+                    "Please check the power"
+                ]
+            },
+            {
+                "situationId": "9",
+                "name": "No internet",
+                "description": [
+                    "No internet in HMI",
+                    "Please check the internet"
+                ]
+            }
+        ]
+    },
+    {
+        "area": "Assembly",
+        "place": "Finish",
+        "device": "HMI",
+        "model": "HMI 123",
+        "coordinate": "Robotic Station 32",
+        "asset": "RS232",
+        "situations": [
+            {
+                "situationId": "8",
+                "name": "No power",
+                "description": [
+                    "No power in HMI",
+                    "Please check the power"
+                ]
+            },
+            {
+                "situationId": "9",
+                "name": "No internet",
+                "description": [
+                    "No internet in HMI",
+                    "Please check the internet"
+                ]
+            }
+        ]
+    },
+    {
+        "area": "Assembly",
+        "place": "Finish",
+        "device": "HMI",
+        "model": "HMI 123",
+        "coordinate": "Robotic Station 32",
+        "asset": "RS232",
+        "situations": [
+            {
+                "situationId": "8",
+                "name": "No power",
+                "description": [
+                    "No power in HMI",
+                    "Please check the power"
+                ]
+            },
+            {
+                "situationId": "9",
+                "name": "No internet",
+                "description": [
+                    "No internet in HMI",
+                    "Please check the internet"
+                ]
+            }
+        ]
+    },
+    {
+        "area": "Assembly",
+        "place": "Finish",
+        "device": "HMI",
+        "model": "HMI 123",
+        "coordinate": "Robotic Station 32",
+        "asset": "RS232",
+        "situations": [
+            {
+                "situationId": "8",
+                "name": "No power",
+                "description": [
+                    "No power in HMI",
+                    "Please check the power"
+                ]
+            },
+            {
+                "situationId": "9",
+                "name": "No internet",
+                "description": [
+                    "No internet in HMI",
+                    "Please check the internet"
+                ]
+            }
+        ]
+    },
+    {
+        "area": "Assembly",
+        "place": "Finish",
+        "device": "HMI",
+        "model": "HMI 123",
+        "coordinate": "Robotic Station 32",
+        "asset": "RS232",
+        "situations": [
+            {
+                "situationId": "8",
+                "name": "No power",
+                "description": [
+                    "No power in HMI",
+                    "Please check the power"
+                ]
+            },
+            {
+                "situationId": "9",
+                "name": "No internet",
+                "description": [
+                    "No internet in HMI",
+                    "Please check the internet"
+                ]
+            }
+        ]
+    },
+    {
+        "area": "Assembly",
+        "place": "Finish",
+        "device": "HMI",
+        "model": "HMI 123",
+        "coordinate": "Robotic Station 32",
+        "asset": "RS232",
+        "situations": [
+            {
+                "situationId": "8",
+                "name": "No power",
+                "description": [
+                    "No power in HMI",
+                    "Please check the power"
+                ]
+            },
+            {
+                "situationId": "9",
+                "name": "No internet",
+                "description": [
+                    "No internet in HMI",
+                    "Please check the internet"
+                ]
+            }
+        ]
+    },
+    {
+        "area": "Assembly",
+        "place": "Finish",
+        "device": "HMI",
+        "model": "HMI 123",
+        "coordinate": "Robotic Station 32",
+        "asset": "RS232",
+        "situations": [
+            {
+                "situationId": "8",
+                "name": "No power",
+                "description": [
+                    "No power in HMI",
+                    "Please check the power"
+                ]
+            },
+            {
+                "situationId": "9",
+                "name": "No internet",
+                "description": [
+                    "No internet in HMI",
+                    "Please check the internet"
+                ]
+            }
+        ]
+    },
+    {
+        "area": "Assembly",
+        "place": "Finish",
+        "device": "HMI",
+        "model": "HMI 123",
+        "coordinate": "Robotic Station 32",
+        "asset": "RS232",
+        "situations": [
+            {
+                "situationId": "8",
+                "name": "No power",
+                "description": [
+                    "No power in HMI",
+                    "Please check the power"
+                ]
+            },
+            {
+                "situationId": "9",
+                "name": "No internet",
+                "description": [
+                    "No internet in HMI",
+                    "Please check the internet"
+                ]
+            }
+        ]
+    },
+    {
+        "area": "Assembly",
+        "place": "Finish",
+        "device": "HMI",
+        "model": "HMI 123",
+        "coordinate": "Robotic Station 32",
+        "asset": "RS232",
+        "situations": [
+            {
+                "situationId": "8",
+                "name": "No power",
+                "description": [
+                    "No power in HMI",
+                    "Please check the power"
+                ]
+            },
+            {
+                "situationId": "9",
+                "name": "No internet",
+                "description": [
+                    "No internet in HMI",
+                    "Please check the internet"
+                ]
+            }
+        ]
+    },
+    {
+        "area": "Test",
+        "place": "Finish",
+        "device": "HMI",
+        "model": "HMI 123",
+        "coordinate": "Robotic Station 32",
+        "asset": "RS232",
+        "situations": [
+            {
+                "situationId": "8",
+                "name": "No power",
+                "description": [
+                    "No power in HMI",
+                    "Please check the power"
+                ]
+            },
+            {
+                "situationId": "9",
+                "name": "No internet",
+                "description": [
+                    "No internet in HMI",
+                    "Please check the internet"
+                ]
+            }
+        ]
     }
 ]`;
 

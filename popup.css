@@ -41,3 +41,28 @@
   textarea {
     resize: none;
   }
+
+  .tabs {
+    display: grid;
+    bottom: 0;
+    grid-template-columns: repeat(4, 1fr);
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    border-top: #2d3031 solid 1px;
+    padding: 5px;
+    font-weight: bold;
+  }
+
+.first:hover, .prev:hover, .next:hover, .last:hover {
+  background-color: #2d3031;
+  color: white;
+  cursor: pointer;
+}
+.first, .prev, .next, .last {
+  border: 1px solid grey;
+  background-color: rgb(red, green, blue);
+  color: #444;
+  padding: 5px;
+  cursor: pointer;
+}
