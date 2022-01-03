@@ -10,10 +10,11 @@ const first = document.querySelector('.first');
 const prev = document.querySelector('.prev');
 const next = document.querySelector('.next');
 const last = document.querySelector('.last');
+var page = 0;
 var outputLocation = '';
 var outageTime = '';
 var situationList;
-var assetData;
+var assetList;
 var assetSource;
 var generalDescription = '';
 var reportTime = '';
@@ -125,11 +126,11 @@ async function fillFormClickHandler() {
 }
 outage.addEventListener('change', (event) => setOutage());
 reportDate.addEventListener('change', (event) => setDate());
-chrome.runtime.sendMessage({ name: 'fetchAssets' }, (assetList) => {
-    assetSource = assetList;
+chrome.runtime.sendMessage({ name: 'fetchAssets' }, (response) => {
+    assetSource = response;
     
 
-    assetData = assetList.map(function (asset) {
+    assetList = response.map(function (asset) {
         return {
             area: asset.area,
             place: asset.place,
@@ -139,10 +140,10 @@ chrome.runtime.sendMessage({ name: 'fetchAssets' }, (assetList) => {
             asset: asset.asset
         };
     });
-    const assetKeys = Object.keys(assetData[0]);
+    const assetKeys = Object.keys(assetList[0]);
 
     generateTableHead(assetTable, assetKeys);
-    generateTableBody(assetTable, assetData);
+    generateTableBody(assetTable, assetList);
 
     const columnMap = (row) => (name) => row.cells[assetKeys.indexOf(name)].innerText;
 
@@ -165,7 +166,7 @@ function generateTableHead(tableElement, headData) {
 
 
 function generateTableBody(tableElement, bodyData) {
-    let page = 0;
+    page = 0;
     let tbody = tableElement.createTBody();
     for (let i = 0; i < page +10; i++) {
         let row = tbody.insertRow();
@@ -176,7 +177,7 @@ function generateTableBody(tableElement, bodyData) {
         }        
     }
     next.addEventListener('click', () => {
-        page == bodyData.length - 10 ? (page = 0) : (page += 10);
+       page = (page == bodyData.length - 10) ? 0 : (page += 10);
         tbody.innerHTML = '';
         for (let i = page; i < page + 10; i++) {
             let row = tbody.insertRow();
@@ -188,7 +189,7 @@ function generateTableBody(tableElement, bodyData) {
         }
     });
    prev.addEventListener('click', () => {
-       page == 0 ? (page = bodyData.length - 10) : (page -= 10);
+      page = (page == 0) ? bodyData.length - 10 : (page -= 10);
          tbody.innerHTML = '';
             for (let i = page; i < page + 10; i++) {
                 let row = tbody.insertRow();
