@@ -1,68 +1,61 @@
-.selected {
-    background-color: #2d3031 !important;
-    color: white;
-  }
-  .container {
-    width: 600px;
-    height: 100%;
-    display: block;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: stretch;
-  }
-  table,
-  th,
-  td {
-    border: 1px solid black;
-    border-collapse: collapse;
-  }
-  #title {
-    display: inline-block;
-  }
-  #table-wrap {
-    display: flex;
-    width: 100%;
-    height: 100%;
-  }
-  #fill {
-    display: flex;
-    justify-content: space-between;
-  }
+
+ body {
+
+  width: 770px;
+  height: 560px;
+  margin-bottom: auto;
+  padding-bottom: 0%;
+  background-color: black;
+}
+
   .button {
-    background-color: #2d3031;
-    border: none;
+    background-color: #4CAF50;
+    border-color: #2d3031;
     color: white;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
     cursor: pointer;
     margin-left: auto;
   }
   textarea {
-    resize: none;
-  }
-
-  .tabs {
-    display: grid;
-    bottom: 0;
-    grid-template-columns: repeat(4, 1fr);
-    text-align: center;
     width: 100%;
-    height: 100%;
-    border-top: #2d3031 solid 1px;
-    padding: 5px;
-    font-weight: bold;
+    resize: none;
+    border: #2d3031 solid 1px;
   }
 
-.first:hover, .prev:hover, .next:hover, .last:hover {
-  background-color: #2d3031;
-  color: white;
-  cursor: pointer;
+#textarea-container {
+ display: flex;
+ width:100%;
 }
-.first, .prev, .next, .last {
-  border: 1px solid grey;
-  background-color: rgb(red, green, blue);
-  color: #444;
-  padding: 5px;
-  cursor: pointer;
+
+#outage-container {
+  display: inline;
+  flex-direction: row;
+  width: 100%;
+
+}
+#outage-period {
+  width:100%;
+  display: inline;
+}
+
+#situation-select {
+  width:100%;
+  display: inline;
+  margin-right: auto;
+}
+#additional, #report-date, #outage-from, #outage-to,  #outage-period, #situation-select {
+  background-color: lightcyan;
+}
+label, #description, #output-title{
+  color: lightcyan;
+}
+#filter-type, #filter-field, #filter-value, #filter-clear{
+ background-color: lightgray;
+
+}
+
+#output-title {
+  background-color: #484848;
+
 }

@@ -2,44 +2,55 @@
 <html>
 
 <head>
-  <script type="text/javascript" src="popup.js" defer></script>
-  <link rel="stylesheet" href="popup.css">
+    <title>SC3</title>
+    <script type="text/javascript" src="popup.js" defer></script>
+    <link rel="stylesheet" href="popup.css">
+    <link href="dist/css/tabulator_midnight.css" rel="stylesheet">
+    <script type="text/javascript" src="dist/js/tabulator.js"></script>
+    <script type="text/javascript" src="dist/js/xlsx.full.min.js"></script>
 </head>
 
 <body>
-  <div class="container">
-    <input type="text" id="searchField" placeholder="Search Asset" />
-    <label for="situation">Situation</label>
-    <select name="situation" id="situation-select">
-      <option value="">Select Situation</option>
-    </select>
-    <div id="title">
-      <form>
-        <label for="output-title">Output Title</label>
-        <input size="80" name="output-title" id="output-title" disabled="disabled" />
-      </form>
-      <div id="fill">
-      <label for="report-date" id="report-label">Report Date</label>
-        <input type="datetime-local" id="report-date" value="" />
-        <label for="outage" id="outage-label">Outage</label>
-        <input type="checkbox" id="outage" />
-        <form id="outage-period"></form>
-        <button class="button" id="fillForm">Fill Form</button>
-      </div>
+    <div class="container">
+        <select id="filter-field">
+            <option value="asset">Asset</option>
+            <option value="area">Area</option>
+            <option value="place">Place</option>
+            <option value="coordinate">Coordinate</option>
+            <option value="device">Device</option>
+            <option value="model">Model</option>
+        </select>
+
+        <select id="filter-type">
+            <option value="like">like</option>
+            <option value="=">=</option>
+            <option value="<">&lt;</option>
+            <option value="<=">&lt;=</option>
+            <option value=">">&gt;</option>
+            <option value=">=">&gt;=</option>
+            <option value="!=">!=</option>
+        </select>
+        <input id="filter-value" type="text" placeholder="value to filter">
+        <button id="filter-clear">Clear Filter</button>
+        <input size="100" name="output-title" id="output-title" disabled="disabled" placeholder="Output Title" />
+        <div id="outage-container">
+            <button class="button" id="fillForm">Fill Form</button>
+            <label for="report-date" id="report-label">Report Date</label>
+            <input type="datetime-local" id="report-date" value="" />
+            <label for="outage" id="outage-label">Outage</label>
+            <input type="checkbox" id="outage" />
+            <form id="outage-period"></form>
+            <select name="situation" id="situation-select">
+                <option value="">Select the row with an asset</option>
+            </select>
+        </div>
+        <div id="textarea-container">
+            <textarea id="description" rows="6" cols="40" disabled="disabled" maxlength="3999"></textarea>
+            <textarea id="additional" placeholder="Notes here (it will be placed in description below)" rows="6"
+                cols="36"></textarea>
+        </div>
     </div>
- 
-    <div id="table-wrap">
-      <table id="assetTable"></table>
-     
-      <textarea id="description" rows="10" cols="100" disabled="disabled" maxlength="3999" ></textarea>
-    </div>
-    <div class="tabs">
-      <div class="first">First</div>
-      <div class="prev">Prev</div>
-      <div class="next">Next</div>
-      <div class="last">Last</div>
-    </div>
-  </div>
+    <div id="assetTable"></div>
 </body>
 
 </html>

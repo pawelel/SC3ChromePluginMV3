@@ -1,31 +1,29 @@
 ﻿{
-  "manifest_version": 3,
-  "name": "mv3 SC3 Helper Plugin",
-  "version": "0.0.1",
-  "description": "SC3 Helper Plugin",
-  "homepage_url": "https://sc3-pl.vwgroup.com/sc3/index.do?lang=en",
-  "action": {
-    "default_title": "Select fields to fill form",
-    "default_popup": "popup.html"
-  },
-  "background": {
-    "service_worker": "wrapper.js"
-  },
-  "web_accessible_resources": [
-    {
-      "resources": ["injector.js"],
-      "matches": ["<all_urls>"]
-    }
-  ],
-  "permissions": [
-    "tabs",
-    "scripting",
-    "storage"
-  ],
-  "host_permissions": [
-    "*://sc3-pl.vwgroup.com/*",
-    "*://sc3-pl.vw.vwg/*",
-    "*://sc3.vwgroup.com/*",
-    "*://sc3.vw.vwg/*"
-  ]
+    "manifest_version": 3,
+    "name": "New SC3 plugin",
+    "version": "0.0.1",
+    "description": "New SC3 Plugin using Tabulator",
+    "homepage_url": "https://sc3-pl.vwgroup.com/sc3/index.do?lang=en",
+    "action": {
+        "default_title": "Select fields to fill form",
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "service_worker": "wrapper.js"
+    },
+    "web_accessible_resources": [{
+        "resources": ["injector.js"],
+        "matches": ["<all_urls>"]
+    }],
+    "permissions": [
+        "tabs",
+        "scripting",
+        "storage"
+    ],
+    "host_permissions": [
+        "*://sc3-pl.vwgroup.com/*",
+        "*://sc3-pl.vw.vwg/*",
+        "*://sc3.vwgroup.com/*",
+        "*://sc3.vw.vwg/*"
+    ]
 }

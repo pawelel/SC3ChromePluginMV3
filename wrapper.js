@@ -1,6 +1,5 @@
-
 try {
-  importScripts("background.js");
+    importScripts("background.js");
 } catch (err) {
-  console.error(err);
+    console.error(err);
 }

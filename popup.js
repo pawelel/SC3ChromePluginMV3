@@ -6,26 +6,105 @@ const reportDate = document.querySelector('#report-date');
 const outputDescription = document.querySelector('#description');
 const situationSelect = document.querySelector('#situation-select');
 const outage = document.querySelector('#outage');
-const first = document.querySelector('.first');
-const prev = document.querySelector('.prev');
-const next = document.querySelector('.next');
-const last = document.querySelector('.last');
-var page = 0;
+//Define variables for input elements
+var fieldEl = document.getElementById("filter-field");
+var typeEl = document.getElementById("filter-type");
+var valueEl = document.getElementById("filter-value");
+var additional;
+
+var table;
 var outputLocation = '';
 var outageTime = '';
 var situationList;
-var assetList;
-var assetSource;
 var generalDescription = '';
 var reportTime = '';
+
+//Trigger setFilter function with correct parameters
+function updateFilter(){
+    var filterVal = fieldEl.options[fieldEl.selectedIndex].value;
+    var typeVal = typeEl.options[typeEl.selectedIndex].value;
+  
+    var filter = filterVal == "function" ? customFilter : filterVal;
+  
+    if(filterVal == "function" ){
+      typeEl.disabled = true;
+      valueEl.disabled = true;
+    }else{
+      typeEl.disabled = false;
+      valueEl.disabled = false;
+    }
+  
+    if(filterVal){
+      table.setFilter(filter,typeVal, valueEl.value);
+    }
+  }
+  
+  //Update filters on value change
+  document.getElementById("filter-field").addEventListener("change", updateFilter);
+  document.getElementById("filter-type").addEventListener("change", updateFilter);
+  document.getElementById("filter-value").addEventListener("keyup", updateFilter);
+  //Clear filters on "Clear Filters" button click
+  document.getElementById("filter-clear").addEventListener("click", function(){
+    fieldEl.value = "asset";
+    typeEl.value = "like";
+    valueEl.value = "";
+    
+    table.clearFilter();
+  });
+
+chrome.runtime.sendMessage({ name: 'fetchAssets' }, (response) => {
+
+    //create Tabulator on DOM element with id "assetTable"
+    table = new Tabulator("#assetTable", {
+        layout: "fitColumns",
+        pagination: "local",
+        selectable: 1,
+        paginationSize: 10,
+        data: response,
+        paginationSizeSelector: [3, 6, 8, 10, 20, 50, 100],
+        movableColumns: true,
+        columns: [
+            { title: "Asset", field: "asset", headerFilter: "input", headerFilterPlaceholder: "assets" },
+            { title: "Area", field: "area", headerFilter: "input", headerFilterPlaceholder: "areas", width: 100 },
+            { title: "Place", field: "place", headerFilter: "input", headerFilterPlaceholder: "places", width: 100 },
+            { title: "Device", field: "device", headerFilter: "input", headerFilterPlaceholder: "devices", width: 100 },
+            { title: "Model", field: "model", headerFilter: "input", headerFilterPlaceholder: "models", width: 100 },
+            { title: "Coordinate", field: "coordinate", headerFilter: "input", headerFilterPlaceholder: "coordinates", width: 100 }
+        ],
+    });
+    
+
+    fillForm.addEventListener('click', () => fillFormClickHandler());
+
+    //trigger an alert message when the row is clicked
+    table.on("rowClick", function (e, row) {
+        var assetRow = row.getData();
+        var assetName = assetRow.asset;
+        //remove situation options from select
+        Array.from(situationSelect.children).forEach((child) => child.remove());
+
+        situationList = filterByValue(response, assetName)[0].situations;
+        console.log(situationList);
+        generateOptions(situationList).forEach((option) => situationSelect.appendChild(option));
+        setSituation(situationList, assetRow);
+        situationSelect.addEventListener('change', (changeEvent) => setSituation(situationList, assetRow));
+    });
+});
 
 setOutage();
 setDate();
 
+function filterByValue(array, value) {
+    return array.filter((data) => JSON.stringify(data).toLowerCase().indexOf(value.toLowerCase()) !== -1);
+}
 
 
 function generateOptions(situationList) {
     const options = [];
+    var initialOption = document.createElement('option');
+    initialOption.value = '';
+    initialOption.text = 'Set report time, outage (if applicable) and the situation here';
+    options.push(initialOption);
     for (const situation of situationList) {
         const option = document.createElement('option');
         option.value = situation.situationId;
@@ -34,6 +113,7 @@ function generateOptions(situationList) {
     }
     return options;
 }
+
 function setOutage() {
     var form = document.getElementById('outage-period');
     var date = new Date();
@@ -80,32 +160,22 @@ function setDate() {
     }
 }
 
-function setSituation(columnMap) {
+function setSituation(situationList, assetRow) {
     outputTitle.value = '';
     const situationName = situationSelect?.options[situationSelect?.selectedIndex]?.text;
-    if (situationName && columnMap('asset')) {
-        outputTitle.value = `[${columnMap('area')}] [${columnMap('place')}] [${columnMap('coordinate')}] [${columnMap('model')}] [${columnMap('asset')}] [${situationName}]`;
-        outputLocation = `[${columnMap('area')}] [${columnMap('place')}] [${columnMap('coordinate')}]`;
+    if (situationName&&situationName!="Set report time, outage (if applicable) and the situation here"&&situationName!="Select the row with an asset" && assetRow.asset) {
+        outputTitle.value = `[${assetRow.area}] [${assetRow.place}] [${assetRow.coordinate}] [${assetRow.device}] [${assetRow.asset}] [${situationName}]`;
+        outputLocation = `[${assetRow.area}] [${assetRow.place}] [${assetRow.coordinate}]`;
+        if(situationSelect?.options[situationSelect?.selectedIndex]?.value>0){
         generalDescription = situationList.find((situation) => situation.name === situationName).description.join('\n');
+        }
+        outputDescription.value = reportTime + outageTime + generalDescription;
+    }else{
+        outputTitle.value = '';
+        outputLocation = '';
+        generalDescription = '';
         outputDescription.value = reportTime + outageTime + generalDescription;
     }
-}
-
-let oldListener = null;
-function rowClickHandler(selectedRow, columnMap, tableRows) {
-    tableRows.forEach((row) => row.classList.remove('selected'));
-    selectedRow.classList.add('selected');
-
-    if (oldListener) {
-        situationSelect.removeEventListener('change', oldListener);
-    }
-
-    Array.from(situationSelect.children).forEach((child) => child.remove());
-    situationList = assetSource.find((asset) => asset.asset === columnMap('asset')).situations;
-    generateOptions(situationList).forEach((option) => situationSelect.appendChild(option));
-    setSituation(columnMap);
-    oldListener = (event) => setSituation(columnMap);
-    situationSelect.addEventListener('change', oldListener);
 }
 
 async function getCurrentTabId() {
@@ -115,117 +185,18 @@ async function getCurrentTabId() {
 }
 
 async function fillFormClickHandler() {
+    additional = document.getElementById("additional");
+if(additional.value!=""){
+    chrome.storage.sync.set({ outputTitle: outputTitle.value, outputDescription: outputDescription.value+'\n'+additional.value, outputLocation: outputLocation });
+}else{
     chrome.storage.sync.set({ outputTitle: outputTitle.value, outputDescription: outputDescription.value, outputLocation: outputLocation });
-    chrome.scripting.executeScript(
-        {
-            target: { tabId: await getCurrentTabId() },
-            files: ['injector.js'],
-        },
+}
+    chrome.scripting.executeScript({
+        target: { tabId: await getCurrentTabId() },
+        files: ['injector.js'],
+    },
         function (injectionResults) { }
     );
 }
 outage.addEventListener('change', (event) => setOutage());
 reportDate.addEventListener('change', (event) => setDate());
-chrome.runtime.sendMessage({ name: 'fetchAssets' }, (response) => {
-    assetSource = response;
-    
-
-    assetList = response.map(function (asset) {
-        return {
-            area: asset.area,
-            place: asset.place,
-            coordinate: asset.coordinate,
-            device: asset.device,
-            model: asset.model,
-            asset: asset.asset
-        };
-    });
-    const assetKeys = Object.keys(assetList[0]);
-
-    generateTableHead(assetTable, assetKeys);
-    generateTableBody(assetTable, assetList);
-
-    const columnMap = (row) => (name) => row.cells[assetKeys.indexOf(name)].innerText;
-
-    const tableRows = assetTable.querySelectorAll('tbody tr');
-    tableRows.forEach((row) => row.addEventListener('click', (clickEvent) => rowClickHandler(row, columnMap(row), tableRows)));
-    searchField.addEventListener('keyup', (keyEvent) => filterTable(tableRows, searchField.value));
-    fillForm.addEventListener('click', (clickEvent) => fillFormClickHandler());
-
-});
-function generateTableHead(tableElement, headData) {
-    let thead = tableElement.createTHead();
-    let row = thead.insertRow();
-    for (let key of headData) {
-        let th = document.createElement('th');
-        let text = document.createTextNode(key);
-        th.appendChild(text);
-        row.appendChild(th);
-    }
-}
-
-
-function generateTableBody(tableElement, bodyData) {
-    page = 0;
-    let tbody = tableElement.createTBody();
-    for (let i = 0; i < page +10; i++) {
-        let row = tbody.insertRow();
-        for (var key in bodyData[i]) {
-            let cell = row.insertCell();
-            let text = document.createTextNode(bodyData[i][key]);
-            cell.appendChild(text);
-        }        
-    }
-    next.addEventListener('click', () => {
-       page = (page == bodyData.length - 10) ? 0 : (page += 10);
-        tbody.innerHTML = '';
-        for (let i = page; i < page + 10; i++) {
-            let row = tbody.insertRow();
-            for (var key in bodyData[i]) {
-                let cell = row.insertCell();
-                let text = document.createTextNode(bodyData[i][key]);
-                cell.appendChild(text);
-            }
-        }
-    });
-   prev.addEventListener('click', () => {
-      page = (page == 0) ? bodyData.length - 10 : (page -= 10);
-         tbody.innerHTML = '';
-            for (let i = page; i < page + 10; i++) {
-                let row = tbody.insertRow();
-                for (var key in bodyData[i]) {
-                    let cell = row.insertCell();
-                    let text = document.createTextNode(bodyData[i][key]);
-                    cell.appendChild(text);
-                }
-            }
-    });
-    first.addEventListener('click', () => {
-        page = 0;
-        tbody.innerHTML = '';
-        for (let i = page; i < page + 10; i++) {
-            let row = tbody.insertRow();
-            for (var key in bodyData[i]) {
-                let cell = row.insertCell();
-                let text = document.createTextNode(bodyData[i][key]);
-                cell.appendChild(text);
-            }
-        }
-    });
-    last.addEventListener('click', () => {
-        page = bodyData.length - 10;
-        tbody.innerHTML = '';
-        for (let i = page; i < page + 10; i++) {
-            let row = tbody.insertRow();
-            for (var key in bodyData[i]) {
-                let cell = row.insertCell();
-                let text = document.createTextNode(bodyData[i][key]);
-                cell.appendChild(text);
-            }
-        }
-    });
-}
-
-function filterTable(tableRows, filter) {
-    tableRows.forEach((row) => (row.innerText.toUpperCase().includes(filter.toUpperCase()) ? (row.style.display = '') : (row.style.display = 'none')));
-}
