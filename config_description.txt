@@ -1,0 +1,9 @@
+tabs - used to get current tab id. If tab id matches allowed page id, then extension is enabled.
+scripting - used to insert text to proper text fields.
+host_permissions - only allow extension to run on specified hosts.
+storage - used to transfer values from content script to background script.
+web_accessible_resources: resources - used to allow content script to access resources.
+web_accessible_resources: matches - used to allow content script to work on specified pages.
+background: service_worker: - used to communicate with an api and content script.
+tabulator.js - used to create table based on data from background script.
+xlsx.full.min.js - used to create excel file.

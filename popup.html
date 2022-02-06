@@ -3,7 +3,7 @@
 
 <head>
     <title>SC3</title>
-    <script type="text/javascript" src="popup.js" defer></script>
+    
     <link rel="stylesheet" href="popup.css">
     <link href="dist/css/tabulator_midnight.css" rel="stylesheet">
     <script type="text/javascript" src="dist/js/tabulator.js"></script>
@@ -34,14 +34,13 @@
         <button id="filter-clear">Clear Filter</button>
         <input size="100" name="output-title" id="output-title" disabled="disabled" placeholder="Output Title" />
         <div id="outage-container">
-            <button class="button" id="fillForm">Fill Form</button>
-            <label for="report-date" id="report-label">Report Date</label>
+            <button class="button" id="fillForm"></button>
+            <label for="report-date" id="report-label"></label>
             <input type="datetime-local" id="report-date" value="" />
-            <label for="outage" id="outage-label">Outage</label>
+            <label for="outage" id="outage-label"></label>
             <input type="checkbox" id="outage" />
             <form id="outage-period"></form>
             <select name="situation" id="situation-select">
-                <option value="">Select the row with an asset</option>
             </select>
         </div>
         <div id="textarea-container">
@@ -51,6 +50,7 @@
         </div>
     </div>
     <div id="assetTable"></div>
+    <script type="text/javascript" src="popup.js" defer></script>
 </body>
 
 </html>

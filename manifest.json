@@ -1,19 +1,20 @@
 ﻿{
     "manifest_version": 3,
-    "name": "SC3 form filler",
+    "name": "__MSG_extName__",
     "version": "0.0.1",
-    "description": "SC3 form filler using Tabulator",
-    "homepage_url": "https://sc3-pl.vwgroup.com/sc3/index.do?lang=en",
+    "description": "__MSG_extDescription__",
+    "author": "__MSG_extAuthor__",
+    "default_locale": "en",
     "action": {
-        "default_title": "Service Center 3 form filler",
+        "default_title": "__MSG_extTitle__",
         "default_popup": "popup.html",
         "default_icon": "./icons/Hcl.png"
     },
     "background": {
         "service_worker": "background.js"
     },
-    "web_accessible_resources": [{
-        "resources": ["injector.js"],
+    "content_scripts": [{
+        "js": ["injector.js"],
         "matches": [ "*://sc3-pl.vwgroup.com/*",
         "*://sc3-pl.vw.vwg/*",
         "*://sc3.vwgroup.com/*",

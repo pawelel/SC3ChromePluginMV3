@@ -1,0 +1,29 @@
+{
+    "extName" : {
+      "message": "Wypełniacz formularzy SC3"
+    },
+    "extDescription" : {
+      "message": "Wypełniacz formularzy SC3 przy pomocy Tabulatora"
+    },
+    "extTitle" : {
+      "message": "Wypełniacz formularzy Service Center 3"
+    },
+    "extAuthor" : {
+      "message": "Paweł Przytuła"
+    },
+    "seconddropdowntext" : {
+        "message": "Ustaw czas zgłoszenia, przestój (jeśli dotyczy) i sytuację tutaj"
+      },
+      "firstdropdowntext" : {
+        "message": "Wyberz rząd z assetem"
+      },
+      "fillform" : {
+        "message": "Wypełnij formularz"
+      },
+      "reportlabel" : {
+        "message": "Data zgłoszenia"
+      },
+      "outageLabel" : {
+        "message": "Przestój"
+      }
+  }

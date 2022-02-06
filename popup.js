@@ -1,8 +1,13 @@
 ﻿const assetTable = document.querySelector('#assetTable');
 const searchField = document.querySelector('#searchField');
 const fillForm = document.querySelector('#fillForm');
+fillForm.innerHTML = chrome.i18n.getMessage("fillform");
 const outputTitle = document.querySelector('#output-title');
 const reportDate = document.querySelector('#report-date');
+const reportLabel = document.querySelector('#report-label');
+reportLabel.innerHTML = chrome.i18n.getMessage("reportlabel");
+const outageLabel = document.querySelector('#outage-label');
+outageLabel.innerHTML = chrome.i18n.getMessage("outagelabel");
 const outputDescription = document.querySelector('#description');
 const situationSelect = document.querySelector('#situation-select');
 const outage = document.querySelector('#outage');
@@ -74,7 +79,10 @@ chrome.runtime.sendMessage({ name: 'fetchAssets' }, (response) => {
             { title: "Coordinate", field: "coordinate", headerFilter: "input", headerFilterPlaceholder: "coordinates", width: 100 }
         ],
     });
-    
+    var initialOption = document.createElement('option');
+    initialOption.value = '';
+    initialOption.text = chrome.i18n.getMessage("firstdropdowntext");
+    situationSelect.appendChild(initialOption);
 
     fillForm.addEventListener('click', () => fillFormClickHandler());
 
@@ -105,7 +113,7 @@ function generateOptions(situationList) {
     const options = [];
     var initialOption = document.createElement('option');
     initialOption.value = '';
-    initialOption.text = 'Set report time, outage (if applicable) and the situation here';
+    initialOption.text = chrome.i18n.getMessage("seconddropdowntext");
     options.push(initialOption);
     for (const situation of situationList) {
         const option = document.createElement('option');
@@ -170,7 +178,7 @@ function setDate() {
 function setSituation(situationList, assetRow) {
     outputTitle.value = '';
     const situationName = situationSelect?.options[situationSelect?.selectedIndex]?.text;
-    if (situationName&&situationName!="Set report time, outage (if applicable) and the situation here"&&situationName!="Select the row with an asset" && assetRow.asset) {
+    if (situationName&&situationName!=chrome.i18n.getMessage("seconddropdowntext")&&situationName!=chrome.i18n.getMessage("firstdropdowntext") && assetRow.asset) {
         outputTitle.value = `[${assetRow.area}] [${assetRow.place}] [${assetRow.coordinate}] [${assetRow.device}] [${assetRow.asset}] [${situationName}]`;
         outputLocation = `[${assetRow.area}] [${assetRow.place}] [${assetRow.coordinate}]`;
         if(situationSelect?.options[situationSelect?.selectedIndex]?.value>0){

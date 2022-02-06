@@ -1,0 +1,29 @@
+{
+    "extName" : {
+      "message": "SC3 form filler"
+    },
+    "extDescription" : {
+      "message": "SC3 form filler using Tabulator"
+    },
+    "extTitle" : {
+      "message": "Service Center 3 form filler"
+    },
+    "extAuthor" : {
+      "message": "Pawel Przytula"
+    },
+    "seconddropdowntext" : {
+      "message": "Set report time, outage (if applicable) and the situation here"
+    },
+    "firstdropdowntext" : {
+      "message": "Select the row with an asset"
+    },
+    "fillform" : {
+      "message": "Fill form"
+    },
+    "reportlabel" : {
+      "message": "Report date"
+    },
+    "outagelabel" : {
+      "message": "Outage"
+    }
+  }

@@ -81791,17 +81791,17 @@
 
 
 const ASSET_LIST_ENDPOINT = 'https://localhost:44356/api/areas/GetAreaPlaceDeviceModels';
-//permission tabs - enable extension only on sc3 pages
+// NOTE permission tabs - enable extension only on sc3 pages
 chrome.action.disable();
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
    if (changeInfo.status == 'complete'){
      console.log(tab.url);
      if (tab.url.indexOf('sc3-pl.vw') != -1||tab.url.indexOf('sc3.vw') != -1){
-       console.log('enable');
+       console.log('sc3 extension enabled');
        chrome.action.enable(tabId);
      }
      else{
-       console.log('disable');
+       console.log('sc3 extension disabled');
        chrome.action.disable(tabId);
      }
    }
@@ -81821,9 +81821,4 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         fetchAPI(sendResponse, ASSET_LIST_ENDPOINT, MOCK_ASSET_LIST);
         return true;
     }
-    chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-        if (changeInfo.status === 'complete') {
-            chrome.tabs.executeScript(tabId, { file: 'injector.js' });
-        }
-    });
 });
