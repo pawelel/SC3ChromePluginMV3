@@ -81791,7 +81791,21 @@
 
 
 const ASSET_LIST_ENDPOINT = 'https://localhost:44356/api/areas/GetAreaPlaceDeviceModels';
-
+//permission tabs - enable extension only on sc3 pages
+chrome.action.disable();
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+   if (changeInfo.status == 'complete'){
+     console.log(tab.url);
+     if (tab.url.indexOf('sc3-pl.vw') != -1||tab.url.indexOf('sc3.vw') != -1){
+       console.log('enable');
+       chrome.action.enable(tabId);
+     }
+     else{
+       console.log('disable');
+       chrome.action.disable(tabId);
+     }
+   }
+ });
 function fetchAPI(sendResponse, url, mockData) {
     // Fetch real data (slow)
     fetch(url, { mode: 'cors' })

@@ -1,24 +1,28 @@
 ﻿{
     "manifest_version": 3,
-    "name": "New SC3 plugin",
+    "name": "SC3 form filler",
     "version": "0.0.1",
-    "description": "New SC3 Plugin using Tabulator",
+    "description": "SC3 form filler using Tabulator",
     "homepage_url": "https://sc3-pl.vwgroup.com/sc3/index.do?lang=en",
     "action": {
-        "default_title": "Select fields to fill form",
-        "default_popup": "popup.html"
+        "default_title": "Service Center 3 form filler",
+        "default_popup": "popup.html",
+        "default_icon": "./icons/Hcl.png"
     },
     "background": {
-        "service_worker": "wrapper.js"
+        "service_worker": "background.js"
     },
     "web_accessible_resources": [{
         "resources": ["injector.js"],
-        "matches": ["<all_urls>"]
+        "matches": [ "*://sc3-pl.vwgroup.com/*",
+        "*://sc3-pl.vw.vwg/*",
+        "*://sc3.vwgroup.com/*",
+        "*://sc3.vw.vwg/*"]
     }],
     "permissions": [
-        "tabs",
         "scripting",
-        "storage"
+        "storage",
+        "tabs"
     ],
     "host_permissions": [
         "*://sc3-pl.vwgroup.com/*",

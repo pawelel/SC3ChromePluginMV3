@@ -57,9 +57,11 @@ chrome.runtime.sendMessage({ name: 'fetchAssets' }, (response) => {
     //create Tabulator on DOM element with id "assetTable"
     table = new Tabulator("#assetTable", {
         layout: "fitColumns",
-        pagination: "local",
+        pagination: "copy",
         selectable: 1,
         paginationSize: 10,
+        clipboard: true,
+        clipboardCopyRowRange:"visible",
         data: response,
         paginationSizeSelector: [3, 6, 8, 10, 20, 50, 100],
         movableColumns: true,
@@ -146,6 +148,11 @@ function setOutage() {
         }
     }
 }
+var assetDate = new Date().toISOString().slice(0, 10);
+//trigger download of data.xlsx file
+document.getElementById("download-xlsx").addEventListener("click", function(){
+    table.download("xlsx", "AssetList"+assetDate+".xlsx", {sheetName:"My Data"});
+});
 
 function setDate() {
     if (reportDate.value === '') {
