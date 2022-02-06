@@ -25,5 +25,8 @@
       },
       "outageLabel" : {
         "message": "Przestój"
+      },
+      "clearfilter" : {
+        "message": "Wyczyść filtr"
       }
   }

@@ -25,5 +25,8 @@
     },
     "outagelabel" : {
       "message": "Outage"
+    },
+    "clearfilter" : {
+      "message": "Clear filter"
     }
   }
