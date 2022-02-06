@@ -1,3 +1,6 @@
+Extension doesn't collect any user data.
+It's main purpose is to insert text from json file or api to form fields.
+It works in 2 languages: English and Polish.
 tabs - used to get current tab id. If tab id matches allowed page id, then extension is enabled.
 scripting - used to insert text to proper text fields.
 host_permissions - only allow extension to run on specified hosts.
