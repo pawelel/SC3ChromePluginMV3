@@ -1,4 +1,13 @@
 ﻿const assetTable = document.querySelector('#assetTable');
+//set locale to Polish
+document.getElementById("lang-polish").addEventListener("click", function(){
+    table.setLocale("pl-pl");
+});
+
+//set default locale
+document.getElementById("lang-english").addEventListener("click", function(){
+    table.setLocale("en-us");
+});
 const searchField = document.querySelector('#searchField');
 const fillForm = document.querySelector('#fillForm');
 fillForm.innerHTML = chrome.i18n.getMessage("fillform");
@@ -14,7 +23,9 @@ const outage = document.querySelector('#outage');
 var fieldEl = document.getElementById("filter-field");
 var typeEl = document.getElementById("filter-type");
 var valueEl = document.getElementById("filter-value");
-var additional;
+valueEl.placeholder= chrome.i18n.getMessage("filtervalue");
+var additional = document.getElementById("additional");
+additional.placeholder = chrome.i18n.getMessage("additionaltext");
 
 var table;
 var outputLocation = '';
@@ -63,12 +74,59 @@ chrome.runtime.sendMessage({ name: 'fetchAssets' }, (response) => {
         layout: "fitColumns",
         pagination: "copy",
         selectable: 1,
+        locale: "pl-pl",
         paginationSize: 10,
         clipboard: true,
         clipboardCopyRowRange:"visible",
         data: response,
         paginationSizeSelector: [3, 6, 8, 10, 20, 50, 100],
         movableColumns: true,
+        langs: {
+            "en-us": {
+                "pagination": {
+                    "page_size": "Page Size",
+                    "first": "First",
+                    "first_title": "First Page",
+                    "last": "Last",
+                    "last_title": "Last Page",
+                    "prev": "Prev",
+                    "prev_title": "Previous Page",
+                    "next": "Next",
+                    "next_title": "Next Page",
+                    "all": "All",
+                },
+                "columns": {
+                    "asset": "Asset",
+                    "area": "Area",
+                    "place": "Place",
+                    "device": "Device",
+                    "model": "Model",
+                    "coordinate": "Coordinate"
+                }
+            },
+            "pl-pl": {
+                "pagination": {
+                    "page_size": "Rozmiar strony",
+                    "first": "Pierwsza",
+                    "first_title": "Pięta strona",
+                    "last": "Ostatnia",
+                    "last_title": "Osatnia strona",
+                    "prev": "Prev",
+                    "prev_title": "Poprzednia strona",
+                    "next": "Następna",
+                    "next_title": "Następna strona",
+                    "all": "Wszystkie"
+                },
+                "columns": {
+                    "asset": "Asset",
+                    "area": "Obszar",
+                    "place": "Miejsce",
+                    "device": "Sprzęt",
+                    "model": "Model",
+                    "coordinate": "Koordynaty"
+                }
+            }
+        },
         columns: [
             { title: "Asset", field: "asset", headerFilter: "input", headerFilterPlaceholder: "assets" },
             { title: "Area", field: "area", headerFilter: "input", headerFilterPlaceholder: "areas", width: 100 },
@@ -76,8 +134,9 @@ chrome.runtime.sendMessage({ name: 'fetchAssets' }, (response) => {
             { title: "Device", field: "device", headerFilter: "input", headerFilterPlaceholder: "devices", width: 100 },
             { title: "Model", field: "model", headerFilter: "input", headerFilterPlaceholder: "models", width: 100 },
             { title: "Coordinate", field: "coordinate", headerFilter: "input", headerFilterPlaceholder: "coordinates", width: 100 }
-        ],
+        ]
     });
+               
     var initialOption = document.createElement('option');
     initialOption.value = '';
     initialOption.text = chrome.i18n.getMessage("firstdropdowntext");

@@ -3,7 +3,7 @@
 
 <head>
     <title>SC3</title>
-    
+
     <link rel="stylesheet" href="popup.css">
     <link href="dist/css/tabulator_midnight.css" rel="stylesheet">
     <script type="text/javascript" src="dist/js/tabulator.js"></script>
@@ -29,9 +29,11 @@
             <option value=">=">&gt;=</option>
             <option value="!=">!=</option>
         </select>
-        <input id="filter-value" type="text" placeholder="value to filter">
+        <input id="filter-value" type="text" placeholder="">
         <button id="download-xlsx">AssetList XLSX</button>
         <button id="filter-clear"></button>
+        <button id="lang-polish">Pl</button>
+        <button id="lang-english">En</button>
         <input size="100" name="output-title" id="output-title" disabled="disabled" placeholder="Output Title" />
         <div id="outage-container">
             <button class="button" id="fillForm"></button>
@@ -45,8 +47,7 @@
         </div>
         <div id="textarea-container">
             <textarea id="description" rows="6" cols="40" disabled="disabled" maxlength="3999"></textarea>
-            <textarea id="additional" placeholder="Notes here (it will be placed in description below)" rows="6"
-                cols="36"></textarea>
+            <textarea id="additional" placeholder="" rows="6" cols="36"></textarea>
         </div>
     </div>
     <div id="assetTable"></div>

@@ -28,5 +28,11 @@
       },
       "clearfilter" : {
         "message": "Wyczyść filtr"
+      },
+      "filtervalue" : {
+        "message": "Wpisz wartość filtra"
+      },
+      "additionaltext" : {
+        "message": "Notatki (będą w description pod godziną zdarzenia)"
       }
   }

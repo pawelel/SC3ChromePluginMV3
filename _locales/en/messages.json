@@ -28,5 +28,11 @@
     },
     "clearfilter" : {
       "message": "Clear filter"
+    },
+    "filtervalue" : {
+      "message": "Filter value"
+    },
+    "additionaltext" : {
+      "message": "Notes here (it will be placed in description below)"
     }
   }
