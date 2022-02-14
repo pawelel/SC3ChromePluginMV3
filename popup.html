@@ -1,57 +1,81 @@
 ﻿<!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <title>SC3</title>
 
-    <link rel="stylesheet" href="popup.css">
-    <link href="dist/css/tabulator_midnight.css" rel="stylesheet">
+    <link rel="stylesheet" href="popup.css" />
+    <link href="dist/css/tabulator_midnight.css" rel="stylesheet" />
     <script type="text/javascript" src="dist/js/tabulator.js"></script>
     <script type="text/javascript" src="dist/js/xlsx.full.min.js"></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="container">
-        <select id="filter-field">
-            <option value="asset">Asset</option>
-            <option value="area">Area</option>
-            <option value="place">Place</option>
-            <option value="coordinate">Coordinate</option>
-            <option value="device">Device</option>
-            <option value="model">Model</option>
-        </select>
-        <select id="filter-type">
-            <option value="like">like</option>
-            <option value="=">=</option>
-            <option value="<">&lt;</option>
-            <option value="<=">&lt;=</option>
-            <option value=">">&gt;</option>
-            <option value=">=">&gt;=</option>
-            <option value="!=">!=</option>
-        </select>
-        <input id="filter-value" type="text" placeholder="">
-        <button id="download-xlsx">AssetList XLSX</button>
-        <button id="filter-clear"></button>
-        <button id="lang-polish">Pl</button>
-        <button id="lang-english">En</button>
-        <input size="100" name="output-title" id="output-title" disabled="disabled" placeholder="Output Title" />
-        <div id="outage-container">
-            <button class="button" id="fillForm"></button>
-            <label for="report-date" id="report-label"></label>
-            <input type="datetime-local" id="report-date" value="" />
-            <label for="outage" id="outage-label"></label>
-            <input type="checkbox" id="outage" />
-            <form id="outage-period"></form>
-            <select name="situation" id="situation-select">
-            </select>
-        </div>
-        <div id="textarea-container">
-            <textarea id="description" rows="6" cols="40" disabled="disabled" maxlength="3999"></textarea>
-            <textarea id="additional" placeholder="" rows="6" cols="36"></textarea>
-        </div>
+      <select id="filter-field">
+        <option value="asset">Asset</option>
+        <option value="area">Area</option>
+        <option value="place">Place</option>
+        <option value="coordinate">Coordinate</option>
+        <option value="device">Device</option>
+        <option value="model">Model</option>
+      </select>
+      <select id="filter-type">
+        <option value="like">like</option>
+        <option value="=">=</option>
+        <option value="<">&lt;</option>
+        <option value="<=">&lt;=</option>
+        <option value=">">&gt;</option>
+        <option value=">=">&gt;=</option>
+        <option value="!=">!=</option>
+      </select>
+      <input id="filter-value" type="text" placeholder="" />
+      <button id="download-xlsx">AssetList XLSX</button>
+      <button id="filter-clear"></button>
+      <button id="lang-polish">Pl</button>
+      <button id="lang-english">En</button>
+      <input
+        size="100"
+        name="output-title"
+        id="output-title"
+        disabled="disabled"
+        placeholder="Output Title"
+      />
+      <div id="outage-container">
+        <button class="button" id="fillForm"></button>
+        <label for="report-date" id="report-label"></label>
+        <input type="datetime-local" id="report-date" value="" />
+        <label for="outage" id="outage-label"></label>
+        <input type="checkbox" id="outage" />
+        <form id="outage-period"></form>
+        <select name="situation" id="situation-select"></select>
+      </div>
+      <div id="textarea-container">
+        <textarea
+          id="description"
+          rows="6"
+          cols="40"
+          disabled="disabled"
+          maxlength="3999"
+        ></textarea>
+        <textarea id="additional" placeholder="" rows="6" cols="36"></textarea>
+      </div>
     </div>
-    <div id="assetTable"></div>
-    <script type="text/javascript" src="popup.js" defer></script>
-</body>
+    <div id="blockcontainer">
+      <input class="input" id="tab1" type="radio" name="tabs" checked />
+      <label class="label" id="assets-label" for="tab1"></label>
 
+      <input class="input" id="tab2" type="radio" name="tabs" />
+      <label class="label" id="announcements-label" for="tab2"></label>
+      <div class="divider"></div>
+
+      <section id="content1">
+        <div class="tab" id="assetTable"></div>
+      </section>
+
+      <section id="content2">
+        <div class="tab" id="announcementsTable"></div>
+      </section>
+    </div>
+    <script type="text/javascript" src="popup.js" defer></script>
+  </body>
 </html>

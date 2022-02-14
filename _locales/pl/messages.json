@@ -34,5 +34,11 @@
       },
       "additionaltext" : {
         "message": "Notatki (będą w description pod godziną zdarzenia)"
+      },
+      "announcements" : {
+        "message": "Ogłoszenia"
+      },
+      "assets" : {
+        "message": "Assety"
       }
   }

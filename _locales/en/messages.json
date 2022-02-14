@@ -34,5 +34,11 @@
     },
     "additionaltext" : {
       "message": "Notes here (it will be placed in description below)"
+    },
+    "announcements" : {
+      "message": "Announcements"
+    },
+    "assets" : {
+      "message": "Assets"
     }
   }

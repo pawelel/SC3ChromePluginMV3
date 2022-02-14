@@ -1,6 +1,4 @@
-
- body {
-
+body {
   width: 770px;
   height: 560px;
   margin-bottom: auto;
@@ -8,54 +6,125 @@
   background-color: black;
 }
 
-  .button {
-    background-color: #4CAF50;
-    border-color: #2d3031;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    margin-left: auto;
-  }
-  textarea {
-    width: 100%;
-    resize: none;
-    border: #2d3031 solid 1px;
-  }
+.button {
+  background-color: #4caf50;
+  border-color: #2d3031;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  margin-left: auto;
+}
+textarea {
+  width: 100%;
+  resize: none;
+  border: #2d3031 solid 1px;
+}
 
 #textarea-container {
- display: flex;
- width:100%;
+  display: flex;
+  width: 100%;
 }
 
 #outage-container {
   display: inline;
   flex-direction: row;
   width: 100%;
-
 }
 #outage-period {
-  width:100%;
+  width: 100%;
   display: inline;
 }
 
 #situation-select {
-  width:100%;
+  width: 100%;
   display: inline;
   margin-right: auto;
 }
-#additional, #report-date, #outage-from, #outage-to,  #outage-period, #situation-select {
+#additional,
+#report-date,
+#outage-from,
+#outage-to,
+#outage-period,
+#situation-select {
   background-color: lightcyan;
 }
-label, #description, #output-title{
+label,
+#description,
+#output-title {
   color: lightcyan;
 }
-#filter-type, #filter-field, #filter-value, #filter-clear{
- background-color: lightgray;
-
+#filter-type,
+#filter-field,
+#filter-value,
+#filter-clear {
+  background-color: lightgray;
 }
 
 #output-title {
   background-color: #484848;
+}
 
+
+section {
+  display: none;
+ 
+  border-bottom: 1px solid #AAA;
+  background :#EEE;
+}
+
+div.divider {
+  width:100%;
+}
+
+.input {
+  display: none;
+}
+
+.label {
+  padding: 10px;
+}
+
+.input:checked + .label {
+  color: #ff0000;
+}
+
+#tab1:checked ~ #content1,
+#tab2:checked ~ #content2{
+  display: block;
+
+}
+.tab{
+  min-height: 370px;
+}
+
+#blockcontainer {
+  -ms-box-orient: horizontal;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: flex;
+  
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
+}
+#blockcontainer #assetTable, #blockcontainer #announcementsTable {
+  display: block!important;
+  margin: auto;
+}
+section {
+    -ms-flex-order: 1;
+    order: 1;
+}
+
+div.divider {
+    -ms-flex-order: 6;
+    order: 6;
+}
+
+.input, .label {
+    -ms-flex-order: 12;
+    order: 12;
 }
